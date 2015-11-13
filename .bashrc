@@ -18,7 +18,7 @@ HISTSIZE=10000
 HISTFILESIZE=100000
 
 # Bash eternal history
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo -e `date +%Y-%m-%d:%H:%M:%S`\\t$PWD"$(history 1 | sed 's/^[0-9]*[[:space:]]*//')" >> ~/.bash_eternal_history'
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo -e `date +%Y-%m-%d:%H:%M:%S`\\t$PWD\\t"$(history 1 | sed 's/^[^a-zA-Z]*//')" >> ~/.bash_eternal_history'
 
 # Make TERM generic rxvt-unicode...seems more compatible with remote servers
 export TERM=rxvt-unicode
