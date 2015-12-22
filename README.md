@@ -8,3 +8,8 @@ ln -sb ~/src/dotfiles/.bash_aliases ~
 .
 .
 ```
+
+For directories, do:
+```
+cp -rs ~/src/dotfiles/.xmonad ~/
+```

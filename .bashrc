@@ -33,29 +33,7 @@ if [[ -d "$HOME/bin" ]] && ! [[ $PATH = *$HOME/bin* ]]; then
     PATH="$HOME/bin:$PATH"
 fi
 
-# virtualenvwrapper setup
-export WORKON_HOME=~/.virtualenvs
-if [[ ! -d $WORKON_HOME ]]; then
-    mkdir $WORKON_HOME
-fi
-VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-source /usr/bin/virtualenvwrapper.sh
-
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # to prevent weird line-wrap bug when term size changes
 shopt -s checkwinsize
-
-# in case we have aws keys
-if [[ -f "$HOME/.aws_keys" ]]; then
-    . "$HOME/.aws_keys"
-fi
-
-# add cabal bin folder to path (for pandoc)
-PATH="$PATH:$HOME/.cabal/bin"
-
-# added by Miniconda 3.6.0 installer
-if [[ ! $PATH == */home/cjn/miniconda/bin* ]]
-then
-    PATH="/home/cjn/miniconda/bin:$PATH"
-fi
