@@ -1,0 +1,16 @@
+"xdotool key --clearmodifiers click 4"
+	Alt + Up
+"xdotool key --clearmodifiers click 5"
+	Alt + Down
+"xdotool key mousedown 1"
+	Control+Alt + d
+"xdotool key mouseup 1"
+	Control+Alt + u
+"xdotool key mousemove_relative --sync 0 20"
+    Control+Alt + Down
+"xdotool key mousemove_relative --sync 0 -20"
+    Control+Alt + Up
+"xdotool key mousemove_relative --sync 20 0"
+    Control+Alt + Right
+"xdotool key mousemove_relative --sync -- -20 0"
+    Control+Alt + Left
