@@ -1,24 +1,6 @@
-# my dotfiles
+# Configuration for development machine
 
-Link them to home via:
-```
-ln -sb ~/src/dotfiles/.bashrc ~
-ln -sb ~/src/dotfiles/.bash_aliases ~
-.
-.
-.
-```
+### Steps
+1.  Run ```base.sh``` ```cjn_user.sh``` and ```install.sh``` as root 
+2.  Run ```setup_dotfiles.sh``` as cjn
 
-For directories, do:
-```
-cp -rs ~/src/dotfiles/.xmonad ~/
-```
-
-## Requirements
-
-- xbindkeys
-- xdotool
-- xmonad
-  - dmenu
-  - dzen2
-- urxvt-font-size (perl module for resizing terminal font)
