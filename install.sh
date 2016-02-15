@@ -4,11 +4,13 @@
 # setup debian/ubuntu dev box
 apt-get update && apt-get install -y \
     git \
+    curl \
     vim \
+    xorg \
     dzen2 \
     suckless-tools \
-    xmonand \ 
     rxvt-unicode \
+    xmonad \
     gnupg-agent \
     pass \
     tmux \
