@@ -5,7 +5,7 @@ cd; mkdir src; cd src
 git clone https://github.com/chrisnatali/dotfiles.git
 
 # link all dotfiles
-for dot in .bash_aliases .bashrc .gitconfig .xbindkeysrc .Xresources
+for dot in .bash_aliases .bashrc .gitconfig .xbindkeysrc .Xresources .vimrc
 do
     ln -sb ~/src/dotfiles/$dot ~
 done
