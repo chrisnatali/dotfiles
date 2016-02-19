@@ -6,7 +6,7 @@
 2.  Run ```base.sh``` ```cjn_user.sh``` and ```install.sh``` as root 
 3.  Run ```setup_dotfiles.sh``` as cjn
 
-## For crouton on chromebook ()
+## For crouton on chromebook
 
 1.  Put chromebook into developer mode and get crouton via instructions [here](https://github.com/dnschneid/crouton)
 2.  Run chronos, enter a shell and install linux with xorg targets via crouton (the following installs Debian jessie):  ```sudo sh ~/Downloads/crouton -t xorg -r jessie```
