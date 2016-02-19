@@ -21,3 +21,4 @@
       ```
 4.  Get the scripts mentioned above and remove the line with ```xorg``` from ```install.sh```
 5.  Follow steps above minus running ```cjn_user.sh```
+6.  For a browser that runs on armhf architecture in debian jessie, use iceweasel
