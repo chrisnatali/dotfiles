@@ -6,6 +6,26 @@
 2.  Run ```base.sh``` ```cjn_user.sh``` and ```install.sh``` as root 
 3.  Run ```setup_dotfiles.sh``` as cjn
 
+## Crypt key management
+
+Uses keychain to manage ssh/gpg keys.  
+
+Setup new ssh key via ssh-keygen -t rsa
+
+Copy the public id file to the authorized_keys file of servers via:
+```ssh-copy-id -i <public_identity_file> user@server```
+
+Export gpg keys from existing machines via:
+```gpg --export GPG_ID > public.key```
+```gpg --export-secret-key GPG_ID > private.key```
+
+Import gpg keys via:
+```gpg --import gpg_public.key```
+```gpg --allow-secret-key-import --import gpg_private.key```
+
+Modify ```.bashrc``` to append any gpg keys required.
+Use ```gpg -k``` to list gpg keys
+
 ## For crouton on chromebook
 
 1.  Put chromebook into developer mode and get crouton via instructions [here](https://github.com/dnschneid/crouton)

@@ -15,4 +15,5 @@ apt-get update && apt-get install -y \
     pass \
     tmux \
     thunar \
-    xbindkeys
+    xbindkeys \
+    keychain
