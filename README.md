@@ -1,10 +1,15 @@
-# Configuration for development machine
+# Configuration for personal machines
 
-## Steps for debian/ubuntu installs
+Note:  There are 2 branches:
+- `master`:  archlinux development box
+- `master-debian`:  debian simple development box
 
-1.  Install baseline debian or ubuntu instance (without desktop manager)
-2.  Run ```base.sh``` ```cjn_user.sh``` and ```install.sh``` as root 
-3.  Run ```setup_dotfiles.sh``` as cjn
+## Steps for installs
+
+1.  Install baseline archlinux or debian/ubuntu instance (without desktop manager)
+2.  If using archlinux checkout `master`, if debian/ubuntu checkout the `master-debian` branch
+2.  Run `base.sh` `cjn_user.sh` and `install.sh` as root 
+3.  Run `setup_dotfiles.sh` as cjn
 
 ## Crypt key management
 
@@ -23,13 +28,17 @@ Import gpg keys via:
 ```gpg --import gpg_public.key```
 ```gpg --allow-secret-key-import --import gpg_private.key```
 
-Modify ```.bashrc``` to append any gpg keys required.
-Use ```gpg -k``` to list gpg keys
+Modify `.bashrc` to append any gpg keys required.
+Use `gpg -k` to list gpg keys
 
 ## For crouton on chromebook
 
 1.  Put chromebook into developer mode and get crouton via instructions [here](https://github.com/dnschneid/crouton)
-2.  Run chronos, enter a shell and install linux with xorg targets via crouton (the following installs Debian jessie):  ```sudo sh ~/Downloads/crouton -t xorg -r jessie```
+2.  Run chronos, enter a shell and install linux with xorg targets via crouton (the following installs Debian jessie):  
+```
+sudo sh ~/Downloads/crouton -t xorg -r jessie
+```
+
 3.  *Workaround* for ARM chromebook, follow instructions for modifications to chroot environ:
     - Add xorg [config](https://github.com/dnschneid/crouton/issues/2424#issuecomment-180875613)
     - Move /dev/dri/card1 to /dev/dri/card0.  Gleaned from [this](https://github.com/dnschneid/crouton/issues/2426#issuecomment-181532932)
@@ -39,6 +48,6 @@ Use ```gpg -k``` to list gpg keys
         sudo mv /dev/dri/card{1,0}
       fi
       ```
-4.  Get the scripts mentioned above and remove the line with ```xorg``` from ```install.sh```
-5.  Follow steps above minus running ```cjn_user.sh```
+4.  Get the scripts mentioned above and remove the line with `xorg` from `install.sh`
+5.  Follow steps above minus running `cjn_user.sh`
 6.  For a browser that runs on armhf architecture in debian jessie, use iceweasel
