@@ -41,4 +41,4 @@ shopt -s checkwinsize
 # startup keychain and ssh-agent with the id_rsa ssh key 
 # this will export the appropriate env vars
 # append additional ssh and gpg keys as needed
-eval `keychain --eval id_rsa`
+eval `keychain -q --eval id_rsa`

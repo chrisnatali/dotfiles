@@ -17,11 +17,4 @@ xrdb -merge .Xresources
 xmodmap -e "keycode 66 = Super_L"
 xmodmap -e "clear lock"
 
-# Run ssh-agent
-eval $(ssh-agent)
-ssh-add ~/.ssh/id_rsa
-
-# Run gpg-agent
-eval $(gpg-agent --daemon)
-
 exec xmonad
