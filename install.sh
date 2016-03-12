@@ -1,19 +1,13 @@
 #!/bin/bash
 # Run as root
 
-# setup debian/ubuntu dev box
-apt-get update && apt-get install -y \
-    git \
-    curl \
-    vim \
-    xorg \
-    dzen2 \
-    suckless-tools \
-    rxvt-unicode \
-    xmonad \
-    gnupg-agent \
-    pass \
-    tmux \
-    thunar \
-    xbindkeys \
-    keychain
+if uname -a | grep ARCH
+then
+    pacman -Sy && pacman -S --noconfirm `cat main-pkgs-arch`
+elif uname -a | grep Debian
+then 
+    apt update && apt install -y `cat main-pkgs-debian`
+else
+    echo "Only ARCH and Debian distro's supported"
+    exit 1
+fi
