@@ -17,21 +17,23 @@ Format a single drive as boot and primary.
 Lookup the drive(s) via `lsblk`.  The master drive will be referred to as variable `$PRIM_DRIVE` below.
 
 2. Mount the partition, install base packages, setup fstab and chroot to it (e.g.):
-```
-mount $PRIM_DRIVE /mnt
-pacstrap /mnt base base-devel
-genfstab -U /mnt >> /mnt/etc/fstab
-arch-chroot /mnt /bin/bash
-```
+
+    ```
+    mount $PRIM_DRIVE /mnt
+    pacstrap /mnt base base-devel
+    genfstab -U /mnt >> /mnt/etc/fstab
+    arch-chroot /mnt /bin/bash
+    ```
 
 3. Run `configure_system.sh` to setup locale and install grub as bootloader
 
 4. Install grub bootloader:
-```
-pacman -S --noconfirm intel-ucode # only IF you have intel cpu
-grub-install --force $PRIM_DRIVE #--force to override warnings
-grub-mkconfig -o /boot/grub/grub.cfg
-```
+
+    ```
+    pacman -S --noconfirm intel-ucode # only IF you have intel cpu
+    grub-install --force $PRIM_DRIVE #--force to override warnings
+    grub-mkconfig -o /boot/grub/grub.cfg
+    ```
 
 5.  Follow the rest of the arch guide from 'Configure the network' on down
 
