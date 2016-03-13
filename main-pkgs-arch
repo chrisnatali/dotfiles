@@ -6,9 +6,9 @@ dmenu
 dzen2
 firefox
 git
-infinality-bundle
-infinality-bundle-multilib
-infinality-bundle-fonts
+ibfonts-meta-base
+ibfonts-meta-extended
+ibfonts-meta-extended-lt 
 iw
 keychain
 openssh
