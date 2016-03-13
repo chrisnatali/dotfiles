@@ -69,6 +69,8 @@ Note:  You can replace `master` with whatever branch of dotfiles you want in the
 7.  Run `./setup_dotfiles.sh` and maintain as needed
 8.  Run `startx` and xmonad should run
 
+Note:  You may need to install video drivers.  See [xorg installation on arch](https://wiki.archlinux.org/index.php/Xorg#Installation)
+
 Review and customize scripts as needed
 
 ## Crypt key management

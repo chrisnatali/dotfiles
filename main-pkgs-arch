@@ -23,3 +23,7 @@ wpa_supplicant
 xbindkeys
 xclip
 xmonad
+xmonad-contrib
+xorg-server
+xorg-xinit
+xorg-xrdb
