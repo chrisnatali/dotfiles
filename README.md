@@ -8,6 +8,8 @@ Note:  There are 2 branches:
 
 This is the bootstrapping of the system from an iso or similar.
 
+### Arch Linux
+
 For Arch, follow [this guide](https://wiki.archlinux.org/index.php/Beginners%27_guide)
 
 Once the bootstrap Arch image is loaded and running the following steps should be performed:
@@ -37,12 +39,16 @@ Lookup the drive(s) via `lsblk`.  The master drive will be referred to as variab
 
 5.  Follow the rest of the arch guide from 'Configure the network' on down
 
-## Steps for installs
+### Debian (TBD)
+
+## Configuration and Package Install
 
 1.  Install baseline archlinux or debian/ubuntu instance (see above)
 2.  If using archlinux checkout `master`, if debian/ubuntu checkout the `master-debian` branch
 2.  Run `base.sh` `cjn_user.sh` and `install.sh` as root 
 3.  Run `setup_dotfiles.sh` as cjn
+
+Review and customize scripts as needed
 
 ## Crypt key management
 
