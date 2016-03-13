@@ -5,7 +5,10 @@ if uname -a | grep ARCH
 then
     # add infinality repo for nice fonts
     # https://wiki.archlinux.org/index.php/Infinality
-    cp infinality-bundle-fonts.conf /etc/pacman.d/
+    if ! grep infinality-bundle-fonts /etc/pacman.conf
+    then 
+        cat infinality-bundle-fonts.conf >> /etc/pacman.conf
+    fi
     pacman-key -r 962DDE58
     pacman-key -lsign-key 962DDE58
     # install all packages
