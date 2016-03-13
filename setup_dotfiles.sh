@@ -1,9 +1,6 @@
 #!/bin/bash
 # Run as cjn
 
-cd; mkdir src; cd src
-git clone https://github.com/chrisnatali/dotfiles.git
-
 # link all dotfiles
 for dot in .bash_aliases .bashrc .gitconfig .vimrc .Xresources .xbindkeysrc .xinitrc  
 do
