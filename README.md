@@ -43,18 +43,37 @@ Lookup the drive(s) via `lsblk`.  The master drive will be referred to as variab
 
 ## Configuration and Package Install
 
+Note:  You can replace `master` with whatever branch of dotfiles you want in the instructions below.
+
 1.  Install baseline archlinux or debian/ubuntu instance (see above)
-2.  If using archlinux checkout `master`, if debian/ubuntu checkout the `master-debian` branch
-2.  Run `base.sh` `cjn_user.sh` and `install.sh` as root 
-3.  Run `setup_dotfiles.sh` as cjn
+2.  Get the tar.gz from github, untar and cd into it
+
+    ```
+    curl -L https://github.com/chrisnatali/dotfiles/archive/master.tar.gz > dotfiles-master.tar.gz
+    tar -zxvf dotfiles-master.tar.gz
+    cd dotfiles-master
+    ```
+2.  Run `./base.sh` `./cjn_user.sh` and `./install.sh` as root 
+3.  If all went well,  `rm -rf dotfiles-master`
+4.  login as cjn 
+5.  Create your ssh key via `ssh-keygen -t rsa` and add it to github repo [see this](https://help.github.com/articles/generating-an-ssh-key/)
+
+6.  make a src dir and checkout this repo into it
+
+    ```
+    mkdir src; cd src
+    git clone git@github.com:chrisnatali/dotfiles.git
+    cd dotfiles 
+    ```
+
+7.  Run `./setup_dotfiles.sh` and maintain as needed
+8.  Run `startx` and xmonad should run
 
 Review and customize scripts as needed
 
 ## Crypt key management
 
 Uses keychain to manage ssh/gpg keys.  
-
-Setup new ssh key via ssh-keygen -t rsa
 
 Copy the public id file to the authorized_keys file of servers via:
 ```ssh-copy-id -i <public_identity_file> user@server```

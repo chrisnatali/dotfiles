@@ -9,8 +9,11 @@ then
     then 
         cat infinality-bundle-fonts.conf >> /etc/pacman.conf
     fi
-    pacman-key -r 962DDE58
-    pacman-key -lsign-key 962DDE58
+    if ! grep pacman-key -l | grep 962DDE58
+    then
+        pacman-key -r 962DDE58
+        pacman-key -lsign-key 962DDE58
+    fi
     # install all packages
     pacman -Sy && pacman -S --noconfirm `cat main-pkgs-arch`
 elif uname -a | grep Debian
