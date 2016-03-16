@@ -28,10 +28,11 @@ Once the bootstrap Arch image is loaded and running the following steps should b
     mount $PRIM_DRIVE /mnt
     pacstrap /mnt base base-devel
     genfstab -U /mnt >> /mnt/etc/fstab
+    cd; cp -R dotfiles-master /mnt/root # copy dotfiles script dir to chroot
     arch-chroot /mnt /bin/bash
     ```
 
-3. Run `./configure_system.sh` to setup locale and install grub as bootloader
+3. cd into `dotfiles-master` and run `./configure_system.sh` to setup locale and install grub as bootloader
 
 4. Install grub bootloader:
 
