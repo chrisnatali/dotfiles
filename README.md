@@ -1,22 +1,26 @@
 # Configuration for personal machines
 
-Note:  There are 2 branches:
-- `master`:  archlinux development box
-- `master-debian`:  debian simple development box
-
 ## Baseline install
 
 This is the bootstrapping of the system from an iso or similar.
 
 ### Arch Linux
 
-For Arch, follow [this guide](https://wiki.archlinux.org/index.php/Beginners%27_guide)
+For Arch, follow [this guide](https://wiki.archlinux.org/index.php/Beginners%27_guide).  Note that the iso should be written directly to the drive, not to a partition (i.e. /dev/sda and *NOT* /dev/sda1).  
 
-Once the bootstrap Arch image is loaded and running the following steps should be performed:
+Once the bootstrap Arch image is loaded and running the following steps should be performed (assumes a network connection):
 
-1. Run `partition_format_simple.sh`:  
-Format a single drive as boot and primary.  
-Lookup the drive(s) via `lsblk`.  The master drive will be referred to as variable `$PRIM_DRIVE` below.
+1.  Get the tar.gz from github, untar and cd into it
+
+    ```
+    curl -L https://github.com/chrisnatali/dotfiles/archive/master.tar.gz > dotfiles-master.tar.gz
+    tar -zxvf dotfiles-master.tar.gz
+    cd dotfiles-master
+    ```
+    
+2. Run `./partition_format_simple.sh`:  
+    Format a single drive as boot and primary.  
+    Lookup the drive(s) via `lsblk`.  The master drive will be referred to as variable `$PRIM_DRIVE` below.
 
 2. Mount the partition, install base packages, setup fstab and chroot to it (e.g.):
 
@@ -27,7 +31,7 @@ Lookup the drive(s) via `lsblk`.  The master drive will be referred to as variab
     arch-chroot /mnt /bin/bash
     ```
 
-3. Run `configure_system.sh` to setup locale and install grub as bootloader
+3. Run `./configure_system.sh` to setup locale and install grub as bootloader
 
 4. Install grub bootloader:
 
@@ -39,20 +43,13 @@ Lookup the drive(s) via `lsblk`.  The master drive will be referred to as variab
 
 5.  Follow the rest of the arch guide from 'Configure the network' on down
 
-### Debian (TBD)
+### Debian (TODO:  Similar to above, but without pacman specifics)
 
 ## Configuration and Package Install
 
-Note:  You can replace `master` with whatever branch of dotfiles you want in the instructions below.
 
-1.  Install baseline archlinux or debian/ubuntu instance (see above)
-2.  Get the tar.gz from github, untar and cd into it
+1.  Install baseline archlinux or debian/ubuntu instance (see above).  You should still have `dotfiles-master` as your working directory with the install scripts from the steps above.  If you skipped that part for some reason, do step 1 from above.  
 
-    ```
-    curl -L https://github.com/chrisnatali/dotfiles/archive/master.tar.gz > dotfiles-master.tar.gz
-    tar -zxvf dotfiles-master.tar.gz
-    cd dotfiles-master
-    ```
 2.  Run `./base.sh` `./cjn_user.sh` and `./install.sh` as root 
 3.  If all went well,  `rm -rf dotfiles-master`
 4.  login as cjn 
