@@ -9,6 +9,7 @@ locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 # set timezone to US/Eastern
+rm /etc/localtime
 ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 hwclock --systohc --utc
 
@@ -16,4 +17,5 @@ hwclock --systohc --utc
 echo "FONT=Lat2-Terminus16" > /etc/vconsole.conf
 
 # setup grub as bootloader
+pacman -Sy
 pacman -S --noconfirm grub
