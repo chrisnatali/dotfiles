@@ -44,12 +44,13 @@ Once the bootstrap Arch image is loaded and running the following steps should b
 
 5.  Follow the rest of the arch guide from 'Configure the network' on down
 
+6.  Reboot without the usb drive and ensure that arch boots up.  
+
 ### Debian (TODO:  Similar to above, but without pacman specifics)
 
 ## Configuration and Package Install
 
-
-1.  Install baseline archlinux or debian/ubuntu instance (see above).  You should still have `dotfiles-master` as your working directory with the install scripts from the steps above.  If you skipped that part for some reason, do step 1 from above.  
+1.  Install baseline archlinux or debian/ubuntu instance (see above).  You should still have `dotfiles-master` (with the install scripts) in `/root`, cd into it if it's not already your working directory.  If you skipped that part for some reason, do step 1 from above.  
 
 2.  Run `./base.sh` `./cjn_user.sh` and `./install.sh` as root 
 3.  If all went well,  `rm -rf dotfiles-master`
