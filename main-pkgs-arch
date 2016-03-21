@@ -29,3 +29,4 @@ xorg-xinit
 xorg-xrdb
 xorg-xmodmap
 xscreensaver
+xdotool

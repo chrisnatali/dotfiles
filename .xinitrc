@@ -20,4 +20,7 @@ xmodmap -e "clear lock"
 # start screensaver
 xscreensaver -no-splash &
 
+# bind keys 
+xbindkeys &
+
 exec xmonad
