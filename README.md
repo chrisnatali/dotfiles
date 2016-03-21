@@ -87,15 +87,7 @@ Import gpg keys via:
 ```gpg --import gpg_public.key```
 ```gpg --allow-secret-key-import --import gpg_private.key```
 
-Modify `.bashrc` to append any gpg keys required.
 Use `gpg -k` to list gpg keys.  
-
-Note:  You may need to add `--agents ssh,gpg` to the keychain command at the end of .bashrc (e.g. ```eval `keychain -q --agents ssh,gpg --eval id_rsa GPG1234ID` ```
-
-Running keychain with my gpg key on archlinux (what I have in my .bashrc):
-```
-eval `keychain -q --agents ssh,gpg --eval id_rsa MY_GPG_KEY`
-```
 
 ## Printer config
 
