@@ -90,6 +90,18 @@ Import gpg keys via:
 Modify `.bashrc` to append any gpg keys required.
 Use `gpg -k` to list gpg keys
 
+Running keychain with my gpg key on archlinux (what I have in my .bashrc):
+```
+eval `keychain -q --agents ssh,gpg --eval id_rsa MY_GPG_KEY`
+```
+
+## Printer config
+
+Install cups and then the driver specific to your printer.  
+For archlinux, the driver seems to need an arch specific install since for my Brother MFC-7360N I could not just use the `rpm` distributed by brother and install it manually via `rpmextract.sh`.  I needed to find the driver in `AUR` and install it in order to get it to work.  
+
+Note that the install creates custom driver scripts, but it did NOT setup the printer as a networked printer so I modified its cups config and set it to use the `ipp` protocol.  YMMV.
+
 ## For crouton on chromebook
 
 1.  Put chromebook into developer mode and get crouton via instructions [here](https://github.com/dnschneid/crouton)
