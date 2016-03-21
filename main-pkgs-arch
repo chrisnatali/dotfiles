@@ -27,3 +27,4 @@ xmonad-contrib
 xorg-server
 xorg-xinit
 xorg-xrdb
+xorg-xmodmap

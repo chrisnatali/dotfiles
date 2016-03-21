@@ -2,7 +2,7 @@
 # Run as cjn
 
 # link all dotfiles
-for dot in .bash_aliases .bashrc .gitconfig .vimrc .Xresources .xbindkeysrc .xinitrc  
+for dot in .profile .bash_aliases .bashrc .gitconfig .vimrc .Xresources .xbindkeysrc .xinitrc  
 do
     ln -sb ~/src/dotfiles/$dot ~
 done
