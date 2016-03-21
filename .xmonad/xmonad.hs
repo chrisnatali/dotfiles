@@ -56,7 +56,8 @@ main = do
         , modMask = mod4Mask -- make "modMask" = mod4 key
         , terminal = "urxvt"
         } `additionalKeys`
-        [ ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
+        [ ((mod4Mask .|. shiftMask, xK_z), spawn "xscreensaver-command -lock") 
+        , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
         , ((0, xK_Print), spawn "scrot")
         , ((mod4Mask, xK_d), spawn "exe=`dmenu_run` && eval \"exec $exe\"")
         ]
