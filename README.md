@@ -92,9 +92,19 @@ Use `gpg -k` to list gpg keys.
 ## Printer config
 
 Install cups and then the driver specific to your printer.  
-For archlinux, the driver seems to need an arch specific install since for my Brother MFC-7360N I could not just use the `rpm` distributed by brother and install it manually via `rpmextract.sh`.  I needed to find the driver in `AUR` and install it in order to get it to work.  
+
+### Brother MFC-7360N
+
+For archlinux, the driver seems to need an arch specific install.  I could not just use the `rpm` distributed by brother and install it manually via `rpmextract.sh`.  I needed to find the driver in `AUR` and install it in order to get it to work.  
 
 Note that the install creates custom driver scripts, but it did NOT setup the printer as a networked printer so I modified its cups config and set it to use the `ipp` protocol.  YMMV.
+
+### Lexmark c748
+
+- Download the ppd file from here:  http://www.openprinting.org/printer/Lexmark/Lexmark-C748
+- Copy it to `/usr/local/lexmark/c748/etc/Lexmark-C748-Postscript-Lexmark.ppd` as sudo (ensure root owns the file and parent dirs)
+- Modify the ppd to remove the line referencing the `fax-pnh-filter` (I don't need that and it fails)
+- Add the printer via cups (worked with `socket` protocol) and select the ppd file as the driver from above directory
 
 ## For crouton on chromebook
 
