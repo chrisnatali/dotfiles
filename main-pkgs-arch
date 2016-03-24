@@ -30,3 +30,5 @@ xorg-xrdb
 xorg-xmodmap
 xscreensaver
 xdotool
+zip
+unzip

@@ -2,10 +2,10 @@ cups
 docker
 docker-compose
 ghostscript
-gsfonts
 inkscape
 nodejs
 npm
 python2
 r
 ruby
+xorg-xrandr
