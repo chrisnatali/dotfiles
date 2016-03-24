@@ -89,6 +89,12 @@ Import gpg keys via:
 
 Use `gpg -k` to list gpg keys.  
 
+## Networking
+
+Wireless seems a little messy with archlinux.  On my ThinkPad x220 with the `rtl8192ce` network card driver, I was able to make connections more reliable by disabling "power saving":
+
+Add `options rtl8192ce ips=0 fwlps=0` to `/etc/modprobe.d/rtl8192ce.conf` to alter the power saving settings when loading the rtl8192ce driver.  
+
 ## Printer config
 
 Install cups and then the driver specific to your printer.  
