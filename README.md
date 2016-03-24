@@ -112,6 +112,10 @@ Note that the install creates custom driver scripts, but it did NOT setup the pr
 - Modify the ppd to remove the line referencing the `fax-pnh-filter` (I don't need that and it fails)
 - Add the printer via cups (worked with `socket` protocol) and select the ppd file as the driver from above directory
 
+## Systemd Units
+
+Any unit files in systemd-units can be enabled by copying them to the `/etc/systemd/system` dir and enabling they via `sudo systemctl enable /etc/systemd/system/<unit-file>`
+
 ## For crouton on chromebook
 
 1.  Put chromebook into developer mode and get crouton via instructions [here](https://github.com/dnschneid/crouton)
