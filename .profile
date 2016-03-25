@@ -16,4 +16,6 @@ fi
 eval `keychain -q --agents ssh,gpg --eval`
 # unlike gpg-agent, which appears to auto add the passphrase to its cache
 # ssh-agent seems to want it added explicitly
-ssh-add $HOME/.ssh/id_rsa
+if ! ssh-add -l | grep $HOME/.ssh/id_rsa > /dev/null; then
+    ssh-add $HOME/.ssh/id_rsa
+fi
