@@ -17,9 +17,6 @@ xrdb -merge .Xresources
 xmodmap -e "keycode 66 = Super_L"
 xmodmap -e "clear lock"
 
-# start screensaver
-xscreensaver -no-splash &
-
 # bind keys 
 xbindkeys &
 
