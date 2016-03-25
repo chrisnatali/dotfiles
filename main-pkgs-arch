@@ -1,7 +1,7 @@
+bash-completion
 chromium
 ctags
 curl
-dialog
 dmenu
 dzen2
 firefox
@@ -9,7 +9,6 @@ git
 ibfonts-meta-base
 ibfonts-meta-extended
 ibfonts-meta-extended-lt 
-iw
 keychain
 openssh
 pass
@@ -19,7 +18,6 @@ thunar
 tmux
 tumbler
 vim
-wpa_supplicant 
 xbindkeys
 xclip
 xmonad
@@ -28,7 +26,6 @@ xorg-server
 xorg-xinit
 xorg-xrdb
 xorg-xmodmap
-xscreensaver
 xdotool
 zip
 unzip

@@ -136,3 +136,7 @@ sudo sh ~/Downloads/crouton -t xorg -r jessie
 4.  Get the scripts mentioned above and remove the line with `xorg` from `install.sh`
 5.  Follow steps above minus running `cjn_user.sh`
 6.  For a browser that runs on armhf architecture in debian jessie, use iceweasel
+
+## Package Specific Help
+
+infinality fonts (i.e. `ibfonts-*`) and `yaourt` can be easily installed by adding custom package repositories.  See their arch install pages for more.

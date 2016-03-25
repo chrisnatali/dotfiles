@@ -9,3 +9,6 @@ python2
 r
 ruby
 xorg-xrandr
+wpa_supplicant 
+dialog
+iw
