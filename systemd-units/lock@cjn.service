@@ -1,7 +1,9 @@
 [Unit]
 Description=Lock on resume
+After=suspend.target
 
 [Service]
+Type=simple
 User=%i
 Environment=DISPLAY=:0
 ExecStart=/usr/bin/slock
