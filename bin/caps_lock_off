@@ -1,0 +1,3 @@
+# use caps lock as win key
+xmodmap -e "keycode 66 = Super_L"
+xmodmap -e "clear lock"
