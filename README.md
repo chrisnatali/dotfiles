@@ -95,6 +95,10 @@ Wireless seems a little messy with archlinux.  On my ThinkPad x220 with the `rtl
 
 Add `options rtl8192ce ips=0 fwlps=0` to `/etc/modprobe.d/rtl8192ce.conf` to alter the power saving settings when loading the rtl8192ce driver.  
 
+## bin directory
+
+The `bin` directory contains display setting and other scripts.  To enable, copy this to `~/bin` and add it to your PATH on shell startup.  
+
 ## Printer config
 
 Install cups and then the driver specific to your printer.  
@@ -115,6 +119,10 @@ Note that the install creates custom driver scripts, but it did NOT setup the pr
 ## Systemd Units
 
 Any unit files in systemd-units can be enabled by copying them to the `/etc/systemd/system` dir and enabling they via `sudo systemctl enable /etc/systemd/system/<unit-file>`
+
+## Bluetooth Keyboard
+
+For archlinux, see [this](https://wiki.archlinux.org/index.php/bluetooth_keyboard)
 
 ## For crouton on chromebook
 
