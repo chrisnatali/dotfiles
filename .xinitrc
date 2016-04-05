@@ -17,6 +17,9 @@ xrdb -merge .Xresources
 xmodmap -e "keycode 66 = Super_L"
 xmodmap -e "clear lock"
 
+# bind keys 
+xbindkeys &
+
 # hack to workaround X (actually freon) issue on arm chromebooks
 if [ -c /dev/dri/card1 ]; then
     sudo mv /dev/dri/card{1,0}

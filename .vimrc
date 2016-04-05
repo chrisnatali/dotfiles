@@ -11,3 +11,6 @@ set softtabstop=4
 set shiftwidth=4        " number of spaces to use for auto indent
 set autoindent          " copy indent from current line when starting a new line
 syntax on
+
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
