@@ -17,11 +17,9 @@ xrdb -merge .Xresources
 xmodmap -e "keycode 66 = Super_L"
 xmodmap -e "clear lock"
 
-# Run ssh-agent
-eval $(ssh-agent)
-ssh-add ~/.ssh/id_rsa
-
-# Run gpg-agent
-eval $(gpg-agent --daemon)
+# hack to workaround X (actually freon) issue on arm chromebooks
+if [ -c /dev/dri/card1 ]; then
+    sudo mv /dev/dri/card{1,0}
+fi
 
 exec xmonad
