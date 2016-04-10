@@ -1,0 +1,12 @@
+[Unit]
+Description=Disable asynchronous power management
+DefaultDependencies=no
+OnFailure=emergency.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c "echo 0 > /sys/power/pm_async"
+RemainAfterExit=yes
+
+[Install]
+RequiredBy=sysinit.target
