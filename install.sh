@@ -16,7 +16,7 @@ then
     fi
     # install all packages
     pacman -Sy && pacman -S --noconfirm `cat main-pkgs-arch`
-elif uname -a | grep Debian
+elif which apt > /dev/null 
 then 
     apt update && apt install -y `cat main-pkgs-debian`
 else
