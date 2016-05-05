@@ -1,9 +1,27 @@
 #!/bin/bash
 # Run as root
+install_type=$1
+distro=""
 
 if uname -a | grep ARCH
 then
-    # add infinality repo for nice fonts
+    distro="arch"
+elif uname -a | grep Debian
+then
+    distro="debian"
+else
+    echo "Only ARCH and Debian distro's supported"
+    exit 1
+fi
+
+if [ ! -f $install_type-pkgs-arch ]
+then
+    echo "pkg listing file not found"
+fi
+
+if [ $distro == "arch" ]
+then
+     # add infinality repo for nice fonts
     # https://wiki.archlinux.org/index.php/Infinality
     if ! grep infinality-bundle-fonts /etc/pacman.conf
     then 
@@ -15,10 +33,10 @@ then
         pacman-key --lsign-key 962DDE58
     fi
     # install all packages
-    pacman -Sy && pacman -S --noconfirm `cat main-pkgs-arch`
-elif uname -a | grep Debian
+    pacman -Sy && pacman -S --noconfirm `cat $install_type-pkgs-arch`
+elif [ $distro == "debian" ]
 then 
-    apt update && apt install -y `cat main-pkgs-debian`
+    apt update && apt install -y `cat $install_type-pkgs-debian`
 else
     echo "Only ARCH and Debian distro's supported"
     exit 1
