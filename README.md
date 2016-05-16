@@ -120,6 +120,8 @@ Note that the install creates custom driver scripts, but it did NOT setup the pr
 
 Any unit files in systemd-units can be enabled by copying them to the `/etc/systemd/system` dir and enabling they via `sudo systemctl enable /etc/systemd/system/<unit-file>`
 
+Check these unit-files for dependencies that may not be referenced in the `pkgs` files (e.g. `slock` is reference in the lock-service unit file)
+
 ## Bluetooth Keyboard
 
 For archlinux, see [this](https://wiki.archlinux.org/index.php/bluetooth_keyboard)
