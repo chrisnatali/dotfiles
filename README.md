@@ -87,6 +87,8 @@ Import gpg keys via:
 ```gpg --import gpg_public.key```
 ```gpg --allow-secret-key-import --import gpg_private.key```
 
+These keys won't be trusted right away, so you may need to use the `--export-ownertrust` and `--import-ownertrust` options to the above OR just set them to trust via the [instructions here](http://stackoverflow.com/a/34132924)
+
 Use `gpg -k` to list gpg keys.  
 
 ## Networking
