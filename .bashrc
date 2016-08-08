@@ -37,3 +37,14 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 # to prevent weird line-wrap bug when term size changes
 shopt -s checkwinsize
+
+# for todo.txt
+if [[ -d "$HOME/src/todo.txt-cli" ]] && ! [[ $PATH = *$HOME/src/todo.txt-cli* ]]; then
+    PATH="$HOME/src/todo.txt-cli:$PATH"
+    # assumes todo.cfg points to todo.txt location and is in src dir
+    export TODOTXT_DEFAULT_ACTION=ls
+    alias t='todo.sh'
+    alias ta='todo.sh add $(date +%Y-%m-%d)'
+fi
+
+
