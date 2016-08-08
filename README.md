@@ -52,7 +52,7 @@ Once the bootstrap Arch image is loaded and running the following steps should b
 
 1.  Install baseline archlinux or debian/ubuntu instance (see above).  You should still have `dotfiles-master` (with the install scripts) in `/root`, cd into it if it's not already your working directory.  If you skipped that part for some reason, do step 1 from above.  
 
-2.  Run `./base.sh` `./cjn_user.sh` and `./install.sh` as root 
+2.  Run `./base.sh` `./cjn_user.sh` and `./install.sh main` as root (change `main` to `bare` if installing bare pkgs on headless box)
 3.  If all went well,  `rm -rf dotfiles-master`
 4.  login as cjn 
 5.  Create your ssh key via `ssh-keygen -t rsa` and add it to github repo [see this](https://help.github.com/articles/generating-an-ssh-key/)
@@ -87,6 +87,8 @@ Import gpg keys via:
 ```gpg --import gpg_public.key```
 ```gpg --allow-secret-key-import --import gpg_private.key```
 
+These keys won't be trusted right away, so you may need to use the `--export-ownertrust` and `--import-ownertrust` options to the above OR just set them to trust via the [instructions here](http://stackoverflow.com/a/34132924)
+
 Use `gpg -k` to list gpg keys.  
 
 ## Networking
@@ -97,7 +99,7 @@ Add `options rtl8192ce ips=0 fwlps=0` to `/etc/modprobe.d/rtl8192ce.conf` to alt
 
 ## bin directory
 
-The `bin` directory contains display setting and other scripts.  To enable, copy this to `~/bin` and add it to your PATH on shell startup.  
+The `bin` directory contains display setting and other scripts.  To enable, link it to your home directory (e.g. `ln -sb ~/src/dotfiles/bin ~/bin`) and add it to your PATH on shell startup.  
 
 ## Printer config
 
@@ -119,6 +121,8 @@ Note that the install creates custom driver scripts, but it did NOT setup the pr
 ## Systemd Units
 
 Any unit files in systemd-units can be enabled by copying them to the `/etc/systemd/system` dir and enabling they via `sudo systemctl enable /etc/systemd/system/<unit-file>`
+
+Check these unit-files for dependencies that may not be referenced in the `pkgs` files (e.g. `slock` is reference in the lock-service unit file)
 
 ## Bluetooth Keyboard
 

@@ -2,3 +2,5 @@ xrandr --output DP-1 --off
 xrandr --output VGA-1 --off
 xrandr --output LVDS-1 --off
 xrandr --output VGA-1 --mode 1920x1080
+xrandr -y
+xrandr -o inverted
