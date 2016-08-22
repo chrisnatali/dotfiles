@@ -10,6 +10,12 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+if which dropbox-cli >& /dev/null
+then
+    # start drobox
+    dropbox-cli start
+fi
+
 if which keychain >& /dev/null
 then
     # startup keychain and ssh-agent with the id_rsa ssh key 
