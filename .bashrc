@@ -17,6 +17,8 @@ shopt -s histappend
 HISTSIZE=10000
 HISTFILESIZE=100000
 
+shopt -s globstar
+
 # Bash eternal history
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo -e `date +%Y-%m-%d:%H:%M:%S`\\t$PWD\\t"$(history 1 | sed 's/^[^a-zA-Z]*//')" >> ~/.bash_eternal_history'
 
@@ -39,12 +41,11 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 shopt -s checkwinsize
 
 # for todo.txt
-if [[ -d "$HOME/src/todo.txt-cli" ]] && ! [[ $PATH = *$HOME/src/todo.txt-cli* ]]; then
+if [[ -d "$HOME/src/todo.txt-cli" ]] && ! [[ $PATH = *$HOME/src/todo.txt-cli* ]]
+then
     PATH="$HOME/src/todo.txt-cli:$PATH"
     # assumes todo.cfg points to todo.txt location and is in src dir
-    export TODOTXT_DEFAULT_ACTION=ls
-    alias t='todo.sh'
-    alias ta='todo.sh add $(date +%Y-%m-%d)'
+    TODOTXT_DEFAULT_ACTION=ls
 fi
 
 
