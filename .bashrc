@@ -30,6 +30,11 @@ if [[ -f "$HOME/.bash_aliases" ]]; then
     . "$HOME/.bash_aliases"
 fi
 
+# load functions
+if [[ -f "$HOME/.functions" ]]; then
+    . "$HOME/.functions"
+fi
+
 # add users bin to PATH if not already there
 if [[ -d "$HOME/bin" ]] && ! [[ $PATH = *$HOME/bin* ]]; then
     PATH="$HOME/bin:$PATH"
