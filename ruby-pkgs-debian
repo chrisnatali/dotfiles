@@ -3,3 +3,5 @@ ruby-dev
 build-essential
 zlibg
 zlibg-dev
+sqlite3
+libsqlite3-dev
