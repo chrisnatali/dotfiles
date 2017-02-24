@@ -72,6 +72,7 @@ Note:  You may need to install video drivers.  See [xorg installation on arch](h
 
 Review and customize scripts as needed
 
+
 ## Crypt key management
 
 Uses keychain to manage ssh/gpg keys.  
@@ -152,3 +153,19 @@ sudo sh ~/Downloads/crouton -t xorg -r jessie
 ## Package Specific Help
 
 infinality fonts (i.e. `ibfonts-*`) and `yaourt` can be easily installed by adding custom package repositories.  See their arch install pages for more.
+
+## Ruby Development
+
+vim tags generation for Ruby is best done via `ripper-tags` (otherwise constants, attributes and other language features are missed).  Install it's gem.
+
+Update tags via:
+
+```
+ripper-tags -R
+```
+
+or for tagging all source in bundled gems:
+
+```
+ripper-tags -R . $(bundle list --paths)
+```
