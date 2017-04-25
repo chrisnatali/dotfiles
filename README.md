@@ -169,3 +169,25 @@ or for tagging all source in bundled gems:
 ```
 ripper-tags -R . $(bundle list --paths)
 ```
+
+### Using vim-rails
+
+[vim-rails](https://github.com/tpope/vim-rails) has some niceties for handling rails specific dev (more rails-aware than ripper-tags for finding things via `gf` and `:R`)
+
+For custom path specification (not needed for "standard" rails apps), create a config/projections.json explicitly specifying dirs to search:
+
+```
+
+{"*":
+  {"path":
+    [
+      "/home/user1/src/my-rails-app/app/admin/controllers/admin",
+      "/home/user1/src/my-rails-app/app/admin/views/admin",
+      "/home/user1/src/my-rails-app/app/admin/lib",
+      "/home/user1/src/my-rails-app/app/controllers",
+      "/home/user1/src/my-rails-app/app/models",
+      "..."
+    ]
+  }
+}
+```
