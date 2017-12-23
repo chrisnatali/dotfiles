@@ -154,6 +154,7 @@ sudo sh ~/Downloads/crouton -t xorg -r jessie
 
 infinality fonts (i.e. `ibfonts-*`) and `yaourt` can be easily installed by adding custom package repositories.  See their arch install pages for more.
 
+
 ## Ruby Development
 
 vim tags generation for Ruby is best done via `ripper-tags` (otherwise constants, attributes and other language features are missed).  Install it's gem.
@@ -177,7 +178,6 @@ ripper-tags -R . $(bundle list --paths)
 For custom path specification (not needed for "standard" rails apps), create a config/projections.json explicitly specifying dirs to search:
 
 ```
-
 {"*":
   {"path":
     [
@@ -191,3 +191,53 @@ For custom path specification (not needed for "standard" rails apps), create a c
   }
 }
 ```
+
+## Xmonad
+
+When xmonad package is updated, you may need to recompile xmonad via `xmonad --recompile`
+
+## Sound
+
+For archlinux, I've only had consistent success with ALSO as the system for controlling sound (very little success with PulseAudio).  
+
+If the default sound configuration wasn't working, I've had to find the correct sound card and device via:
+
+```
+> aplay -l
+
+**** List of PLAYBACK Hardware Devices ****
+card 0: HDMI [HDA Intel HDMI], device 3: HDMI 0 [HDMI 0]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 0: HDMI [HDA Intel HDMI], device 7: HDMI 1 [HDMI 1]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 0: HDMI [HDA Intel HDMI], device 8: HDMI 2 [HDMI 2]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 0: HDMI [HDA Intel HDMI], device 9: HDMI 3 [HDMI 3]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 0: HDMI [HDA Intel HDMI], device 10: HDMI 4 [HDMI 4]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: PCH [HDA Intel PCH], device 0: ALC283 Analog [ALC283 Analog]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+```
+
+Then determining which card/device worked via testing:
+
+```
+> speaker-test -D plughw:0,7 # card 0, device 7
+```
+
+And finally, configuring the sound card via `~/.asoundrc`:
+
+```
+> cat ~/.asoundrc
+defaults.pcm.card 0
+defaults.pcm.device 7
+defaults.ctl.card 0
+```
+

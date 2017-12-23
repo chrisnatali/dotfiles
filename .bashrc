@@ -40,6 +40,9 @@ if [[ -d "$HOME/bin" ]] && ! [[ $PATH = *$HOME/bin* ]]; then
     PATH="$HOME/bin:$PATH"
 fi
 
+# add gem folders to path if we're using ruby/gems
+command -v gem >/dev/null && PATH=$PATH:$(ruby -e 'print Gem.user_dir')/bin
+
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # to prevent weird line-wrap bug when term size changes
