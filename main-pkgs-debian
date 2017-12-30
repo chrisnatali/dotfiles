@@ -3,6 +3,7 @@ curl
 dmenu
 dzen2
 git
+go
 keychain
 pass
 rxvt-unicode
