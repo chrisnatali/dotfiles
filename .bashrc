@@ -48,6 +48,9 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 # to prevent weird line-wrap bug when term size changes
 shopt -s checkwinsize
 
+# for go
+command -v go env > /dev/null 2>&1 && export GOPATH="$HOME/go";export PATH=$PATH:$GOPATH/bin
+
 # for todo.txt
 if [[ -d "$HOME/src/todo.txt-cli" ]] && ! [[ $PATH = *$HOME/src/todo.txt-cli* ]]
 then
