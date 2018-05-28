@@ -7,9 +7,6 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
 
-myManageHook = composeAll
-     [ ]
- 
 -- Loghook
 -- 
 -- note: some of these colors may differ from what's in the
@@ -46,8 +43,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP -- the h here...
 main = do
     dzenproc <- spawnPipe "dzen2 -dock -p -xs 1 -ta l -e 'onstart=lower'"
     xmonad $ desktopConfig
-        { manageHook = manageDocks <+> myManageHook -- myManageHook from above
-                       <+> manageHook desktopConfig
+        { manageHook = manageDocks <+> manageHook desktopConfig
         , layoutHook = avoidStruts $ layoutHook desktopConfig
         , logHook = myLogHook dzenproc
         -- for xmobar, uncomment below

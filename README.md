@@ -125,6 +125,12 @@ Any unit files in systemd-units can be enabled by copying them to the `/etc/syst
 
 Check these unit-files for dependencies that may not be referenced in the `pkgs` files (e.g. `slock` is reference in the lock-service unit file)
 
+### Slock
+
+- Currently configured to lock screen via xmonad `mod+Shift+z` keypress
+
+- To unlock, hit `ESC` and then enter password for user
+
 ## Bluetooth Keyboard
 
 For archlinux, see [this](https://wiki.archlinux.org/index.php/bluetooth_keyboard)
