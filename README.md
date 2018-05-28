@@ -72,6 +72,15 @@ Note:  You may need to install video drivers.  See [xorg installation on arch](h
 
 Review and customize scripts as needed
 
+### Vim and Vundle
+
+I keep vim packages to a minimum.  For those I use, I manage via [Vundle](https://github.com/VundleVim/Vundle.vim).
+
+See `.vimrc.bundles` for vim packages and install them via:
+
+```
+vim +PluginInstall +qall
+```
 
 ## Crypt key management
 

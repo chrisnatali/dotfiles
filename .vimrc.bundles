@@ -1,3 +1,4 @@
 " Personal vim plugins
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'ledger/vim-ledger'
