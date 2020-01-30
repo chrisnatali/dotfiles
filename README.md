@@ -55,7 +55,7 @@ Once the bootstrap Arch image is loaded and running the following steps should b
 2.  Run `./base.sh` `./cjn_user.sh` and `./install.sh main` as root (change `main` to `bare` if installing bare pkgs on headless box)
 3.  If all went well,  `rm -rf dotfiles-master`
 4.  login as cjn 
-5.  Create your ssh key via `ssh-keygen -t rsa` and add it to github repo [see this](https://help.github.com/articles/generating-an-ssh-key/)
+5.  Create your ssh key via `ssh-keygen -t rsa` and add it to github account [see this](https://help.github.com/articles/generating-an-ssh-key/)
 
 6.  make a src dir and checkout this repo into it
 
