@@ -111,6 +111,8 @@ Add `options rtl8192ce ips=0 fwlps=0` to `/etc/modprobe.d/rtl8192ce.conf` to alt
 
 The `bin` directory contains display setting and other scripts.  To enable, link it to your home directory (e.g. `ln -sb ~/src/dotfiles/bin ~/bin`) and add it to your PATH on shell startup.  
 
+TODO:  Merge files into `bin` dir since group dotfiles may also go into here
+
 ## Printer config
 
 Install cups and then the driver specific to your printer.  
