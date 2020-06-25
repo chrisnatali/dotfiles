@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+
+require 'csv'
+require 'json'
+
+module ArrayOfHashes
+  def to_csv(io)
+    # Get all unique keys into an array:
+    keys = self.flat_map(&:keys).uniq
+    csv = CSV.new(io)
+    csv << keys
+    self.each do |hash|
+      # fetch values at keys location, inserting null if not found.
+      csv << hash.values_at(*keys)
+    end
+  end
+end
+
+data = JSON.parse(STDIN.read)
+data.extend(ArrayOfHashes)
+data.to_csv(STDOUT)
