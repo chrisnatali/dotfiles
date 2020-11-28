@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Create single primary partition utilizing all space
-# (run as root)
+# 
+# Single parameter should be a block device
+# e.g /dev/sda or /dev/nvme0n1
 
 if [ ! -b $1 ]
 then
