@@ -113,23 +113,6 @@ The `bin` directory contains display setting and other scripts.  To enable, link
 
 TODO:  Merge files into `bin` dir since group dotfiles may also go into here
 
-## Printer config
-
-Install cups and then the driver specific to your printer.  
-
-### Brother MFC-7360N
-
-For archlinux, the driver seems to need an arch specific install.  I could not just use the `rpm` distributed by brother and install it manually via `rpmextract.sh`.  I needed to find the driver in `AUR` and install it in order to get it to work.  
-
-Note that the install creates custom driver scripts, but it did NOT setup the printer as a networked printer so I modified its cups config and set it to use the `ipp` protocol.  YMMV.
-
-### Lexmark c748
-
-- Download the ppd file from here:  http://www.openprinting.org/printer/Lexmark/Lexmark-C748
-- Copy it to `/usr/local/lexmark/c748/etc/Lexmark-C748-Postscript-Lexmark.ppd` as sudo (ensure root owns the file and parent dirs)
-- Modify the ppd to remove the line referencing the `fax-pnh-filter` (I don't need that and it fails)
-- Add the printer via cups (worked with `socket` protocol) and select the ppd file as the driver from above directory
-
 ## Systemd Units
 
 Any unit files in systemd-units can be enabled by copying them to the `/etc/systemd/system` dir and enabling they via `sudo systemctl enable /etc/systemd/system/<unit-file>`
@@ -258,3 +241,21 @@ defaults.pcm.device 7
 defaults.ctl.card 0
 ```
 
+## MacOS
+
+MacOS setup is not nearly as automated as Linux setup above. Basic steps are:
+
+1. `brew bundle --file Brewfile` to install packages/casks listed in Brewfile
+  - There may be failures due to pinned dependencies or other baseline configuration oddities. YMMV.
+
+2. `chsh -s /bin/bash` to change the default shell to bash
+
+3. Migrate any gpg keys (for pass) and ssh keys (see  [Crypt key management](Crypt key management) section above)
+
+4. Configure bash with custom PATH, functions, aliases etc by:
+  a. Adding `source .<config_file_name>.local` to the existing `.<config_file_name>` (e.g. `source .bashrc.local` for bashrc)
+  b. Adding any local configuration to that `.<config_file_name>.local` (these may not be under version control, so copy from existing setup)
+
+5. Configure installed applications by linking their respective dot files or directories to `~`
+
+6. Clone [maximum-awesome fork](https://github.com/chrisnatali/maximum-awesome) to src and run rake on it to setup vim and tmux plus their config
