@@ -4,6 +4,7 @@ brew 'librsvg'
 cask 'basictex'
 brew 'csvtomd'
 # utils
+brew 'gh'
 brew 'pass'
 brew 'textql'
 cask 'iterm2'
