@@ -17,7 +17,7 @@ Once the bootstrap Arch image is loaded and running the following steps should b
     tar -zxvf dotfiles-master.tar.gz
     cd dotfiles-master
     ```
-    
+
 2. Run `./partition_format_simple.sh`:  
     Format a single drive as boot and primary.  
     Lookup the drive(s) via `lsblk`.  The master drive will be referred to as variable `$PRIM_DRIVE` below.
@@ -243,7 +243,7 @@ defaults.ctl.card 0
 
 ## MacOS
 
-MacOS setup is not nearly as automated as Linux setup above. Basic steps are:
+MacOS setup is not automated as Linux setup above. Basic steps are:
 
 1. `brew bundle --file Brewfile` to install packages/casks listed in Brewfile
   - There may be failures due to pinned dependencies or other baseline configuration oddities. YMMV.
@@ -253,9 +253,25 @@ MacOS setup is not nearly as automated as Linux setup above. Basic steps are:
 3. Migrate any gpg keys (for pass) and ssh keys (see  [Crypt key management](Crypt key management) section above)
 
 4. Configure bash with custom PATH, functions, aliases etc by:
-  a. Adding `source .<config_file_name>.local` to the existing `.<config_file_name>` (e.g. `source .bashrc.local` for bashrc)
-  b. Adding any local configuration to that `.<config_file_name>.local` (these may not be under version control, so copy from existing setup)
+  - Adding `source .<config_file_name>.local` to the existing `.<config_file_name>` (e.g. `source .bashrc.local` for bashrc)
+  - Adding any local configuration to that `.<config_file_name>.local` (these may not be under version control, so copy from existing setup)
 
 5. Configure installed applications by linking their respective dot files or directories to `~`
+  - For snowsql (and possibly other apps), `ln -s /Applications/SnowSQL.app/Contents/MacOS/snowsql /Users/cnatali/bin/snowsql` to put it in view of `PATH`
 
 6. Clone [maximum-awesome fork](https://github.com/chrisnatali/maximum-awesome) to src and run rake on it to setup vim and tmux plus their config
+
+7. Set iTerm config to allow alt-b, alt-f... to work as expected (see [this](https://stackoverflow.com/questions/18923765/bash-keyboard-shortcuts-in-iterm-like-altd-and-altf))
+
+8. Add 9 Desktops
+  - Hit `Ctrl + Up` and click the "+" icon at the right of screen to add Desktops (aka spaces)
+  - In "System Preferences > Keyboard > Mission Control > Shortcuts", click the checkbox next to each "Switch to Desktop <n>" line under "Mission Control"
+  - For each of those "Switch to Desktop <n>" lines, change the key combination to be "Alt + <n>" (Alt is also the Option key on Mac)
+
+9. Setup yabai tiling window manager
+  - See [instructions here](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)))
+  - Configure via `.yabairc` in this repo, then link to home dir via `ln -s ~/src/dotfiles/.yabairc .yabairc`
+  - Use [skhd](https://github.com/koekeishiya/skhd) to map modifiers to yabai actions
+  - Configure via `.skhdrc` in this repo, then link to home dir via `ln -s ~/src/dotfiles/.skhdrc .skhdrc`
+  - Use karabiner to map caps-lock to alt key so that caps-lock is effectively the main mod key for Yabai and switching desktop/spaces, making it similar to xmonad
+
