@@ -13,10 +13,6 @@ fi
 
 xrdb -merge .Xresources
 
-# Use caps_lock as mod key
-xmodmap -e "keycode 66 = Super_L"
-xmodmap -e "clear lock"
-
 # bind keys 
 xbindkeys &
 

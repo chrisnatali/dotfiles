@@ -66,7 +66,22 @@ Once the bootstrap Arch image is loaded and running the following steps should b
     ```
 
 7.  Run `./setup_dotfiles.sh` and maintain as needed
-8.  Run `startx` and xmonad should run
+
+8. Map the Caps Lock key to the Windows/Command key
+
+Do a `sudo vim /usr/share/X11/xkb/symbols/pc` and make the following changes to the key configuration:
+
+```
+    //Map Caps to Super_L
+    // key <CAPS> {	[ Caps_Lock		]	};
+    key <CAPS> {	[ Super_L  		]	};
+
+    // Disable lock for Caps Lock
+    // modifier_map Lock   { Caps_Lock };
+```
+This will make these changes permanent for any plugged in keyboard (whereas xmodmap gets reset upon keyboard plugin)
+
+9.  Run `startx` and xmonad should run
 
 Note:  You may need to install video drivers.  See [xorg installation on arch](https://wiki.archlinux.org/index.php/Xorg#Installation)
 

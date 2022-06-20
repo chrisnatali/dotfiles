@@ -7,8 +7,9 @@ then
 fi
 
 # xclip copy/paste
-alias xcc='xclip -sel clip'
-alias xcp='xclip -o -sel clip'
+alias pbcopy='xclip -sel clip'
+alias pbpaste='xclip -o -sel clip'
+alias pbselect='xclip -o -sel primary'
 
 # node rlwrap
 alias node='env NODE_NO_READLINE=1 rlwrap node'
