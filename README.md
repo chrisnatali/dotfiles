@@ -85,7 +85,11 @@ This will make these changes permanent for any plugged in keyboard (whereas xmod
 
 Note:  You may need to install video drivers.  See [xorg installation on arch](https://wiki.archlinux.org/index.php/Xorg#Installation)
 
-Review and customize scripts as needed
+#### Extra Packages
+
+There are several packages that are not installed by default and are not managed by the most common package managers (e.g. dropbox-cli, textql). 
+
+In ArchLinux, some of these may be available for install via the [Arch User Repository (AUR)](https://aur.archlinux.org/). You can install the `yay` pkg manager to help manage these packages.
 
 ### Vim and Vundle
 

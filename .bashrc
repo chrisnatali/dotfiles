@@ -16,6 +16,7 @@ shopt -s histappend
 
 HISTSIZE=10000
 HISTFILESIZE=100000
+EDITOR=vim
 
 shopt -s globstar
 

@@ -12,7 +12,8 @@ import System.IO
 -- note: some of these colors may differ from what's in the
 -- screenshot, it changes daily
 -- 
-myLogHook h = dynamicLogWithPP $ defaultPP -- the h here...
+myLogHook :: Handle -> X ()
+myLogHook h = dynamicLogWithPP $ def
     -- display current workspace as darkgrey on light grey (opposite of default colors)
     { ppCurrent         = dzenColor "#303030" "#909090" . pad 
 

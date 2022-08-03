@@ -6,10 +6,16 @@ then
     alias ta='todo.sh add $(date +%Y-%m-%d)'
 fi
 
-# xclip copy/paste
-alias pbcopy='xclip -sel clip'
-alias pbpaste='xclip -o -sel clip'
-alias pbselect='xclip -o -sel primary'
+if which textql >& /dev/null
+then
+  alias tq="textql -header -output-header -sql"
+  # textql no header
+  alias tqnh="textql -sql"
+fi
+
+# xclip copy/paste defaults
+alias pbcopy='xclip -sel p'
+alias pbpaste='xclip -sel p -o'
 
 # node rlwrap
 alias node='env NODE_NO_READLINE=1 rlwrap node'

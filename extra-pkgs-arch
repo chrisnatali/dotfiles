@@ -6,9 +6,12 @@ ghostscript
 inkscape
 nodejs
 npm
+pandoc
+poppler
 python2
 r
 ruby
+texlive-core
 xorg-xrandr
 wpa_supplicant 
 dialog

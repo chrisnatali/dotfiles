@@ -13,6 +13,9 @@ fi
 
 xrdb -merge .Xresources
 
+# use caps lock as "super" or hyper key (command key for osx, windows key for ms)
+setxkbmap -option caps:hyper 
+
 # bind keys 
 xbindkeys &
 
