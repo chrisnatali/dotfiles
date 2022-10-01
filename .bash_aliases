@@ -22,3 +22,6 @@ alias node='env NODE_NO_READLINE=1 rlwrap node'
 
 # use tmux -2 for force 256 colors (for better color/active window support)
 alias tmux='tmux -2'
+
+# Some systems don't have vi installed
+alias vi=vim
