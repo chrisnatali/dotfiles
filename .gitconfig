@@ -3,3 +3,5 @@
 	name = chrisnatali
 [push]
 	default = simple
+[core]
+	editor = vim
