@@ -13,47 +13,67 @@ Once the bootstrap Arch image is loaded and running the following steps should b
 1.  Get the tar.gz from github, untar and cd into it
 
     ```
-    curl -L https://github.com/chrisnatali/dotfiles/archive/master.tar.gz > dotfiles-master.tar.gz
-    tar -zxvf dotfiles-master.tar.gz
-    cd dotfiles-master
+    curl -L https://github.com/chrisnatali/dotfiles/archive/main.tar.gz > dotfiles-main.tar.gz
+    tar -zxvf dotfiles-main.tar.gz
+    cd dotfiles-main
     ```
 
 2. Run `./partition_format_simple.sh`:  
+
     Format a single drive as boot and primary.  
-    Lookup the drive(s) via `lsblk`.  The master drive will be referred to as variable `$PRIM_DRIVE` below.
+    Lookup the drive(s) via `lsblk` or if you suspect a device dir is the drive you want, you can confirm via `parted /dev/<suspected_drive> print` where suspected drive might be `sd{a,b...}`.  
+
+    Define the following shell variables:
+    PRIM_DRIVE: The main drive we are installing to and formatting (e.g. `PRIM_DRIVE=/dev/sdb`)
+    PRIM_PART: The primary partition on that drive (e.g. `PRIM_PART=/dev/sdb1`)
 
 2. Mount the partition, install base packages, setup fstab and chroot to it (e.g.):
 
     ```
-    mount $PRIM_DRIVE /mnt
-    pacstrap /mnt base base-devel
+    mount $PRIM_PART /mnt
+    pacstrap /mnt base base-devel linux linux-firmware
     genfstab -U /mnt >> /mnt/etc/fstab
-    cd; cp -R dotfiles-master /mnt/root # copy dotfiles script dir to chroot
+    cd; cp -R dotfiles-main /mnt/root # copy dotfiles script dir to chroot
     arch-chroot /mnt /bin/bash
     ```
 
-3. cd into `dotfiles-master` and run `./configure_system.sh` to setup locale and install grub as bootloader
+3. cd into `root/dotfiles-main` and run `./configure_system.sh` to setup locale and install grub as bootloader
 
-4. Install grub bootloader:
+4. Install and configure grub bootloader:
+
+    This assumes the partitioning scheme is compatible with GRUB.
 
     ```
     pacman -S --noconfirm intel-ucode # only IF you have intel cpu
-    grub-install --force $PRIM_DRIVE #--force to override warnings
+    grub-install $PRIM_DRIVE # Note that PRIM_DRIVE 
     grub-mkconfig -o /boot/grub/grub.cfg
     ```
+  
+    Note that the "device map" that GRUB uses to create the configuration may not map the device 
+    to the correct boot hard drive when using a BIOS-based Master Boot Record bootstrap setup. 
 
-5.  Follow the rest of the arch guide from 'Configure the network' on down
+    In that case, you may need to find the correct mapping by running a grub shell and then
+    modify the grub.cfg to correctly map the device to the hard drive (e.g. `(hd0,msdos1) -> /dev/sdb1`)
 
-6.  Reboot without the usb drive and ensure that arch boots up.  
+5. Install linux kernel
+  
+   This was needed in order for grub to find the `vmlinuz-linux` file on boot
+   ```
+   pacman -S linux
+   ```
+
+6.  Follow the rest of the arch guide from 'Configure the network' on down
+
+7.  Reboot without the usb drive and ensure that arch boots up.  
 
 ### Debian (TODO:  Similar to above, but without pacman specifics)
 
 ## Configuration and Package Install
 
-1.  Install baseline archlinux or debian/ubuntu instance (see above).  You should still have `dotfiles-master` (with the install scripts) in `/root`, cd into it if it's not already your working directory.  If you skipped that part for some reason, do step 1 from above.  
+1.  Install baseline archlinux or debian/ubuntu instance (see above).  You should still have `dotfiles-main` (with the install scripts) in `/root`, cd into it if it's not already your working directory.  If you skipped that part for some reason, do step 1 from above.  
 
 2.  Run `./base.sh` `./cjn_user.sh` and `./install.sh main` as root (change `main` to `bare` if installing bare pkgs on headless box)
-3.  If all went well,  `rm -rf dotfiles-master`
+3.  If all went well,  `rm -rf dotfiles-main`
 4.  login as cjn 
 5.  Create your ssh key via `ssh-keygen -t rsa` and add it to github account [see this](https://help.github.com/articles/generating-an-ssh-key/)
 
