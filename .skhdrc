@@ -59,6 +59,9 @@ shift + alt - space : \
     yabai -m window --toggle float; \
     yabai -m window --toggle border
 
+# Unfloat all windows in the current workspace
+shift + alt - t : yabai -m query --windows --space | jq -r '.[] | select(."is-floating" == true) | .id' | xargs -I{} yabai -m window {} --toggle float
+
 # Split changes
 shift + lctrl - space : yabai -m window --toggle split
 

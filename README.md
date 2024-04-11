@@ -314,3 +314,6 @@ MacOS setup is not automated as Linux setup above. Basic steps are:
   - Configure via `.skhdrc` in this repo, then link to home dir via `ln -s ~/src/dotfiles/.skhdrc .skhdrc`
   - Use karabiner to map caps-lock to alt key so that caps-lock is effectively the main mod key for Yabai and switching desktop/spaces, making it similar to xmonad
 
+10. NeoVim
+
+Currently setup to use Coc as language server with vim-rails and kotlin-vim plugins managed by vim-plug per ChatGPT recs for setup. Configuration is not managed via dotfiles for now.
