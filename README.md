@@ -87,7 +87,11 @@ Once the bootstrap Arch image is loaded and running the following steps should b
 
 7.  Run `./setup_dotfiles.sh` and maintain as needed
 
-8. Map the Caps Lock key to the Windows/Command key
+8. Map the appropriate `.config` directories via `ln -sb ~/src/dotfiles/.config/<config_dir>` 
+
+Migrating to a top-level `.config` folder for all configuration is a WIP, so only some configurations have been moved there.
+
+9. Map the Caps Lock key to the Windows/Command key
 
 Do a `sudo vim /usr/share/X11/xkb/symbols/pc` and make the following changes to the key configuration:
 
@@ -101,7 +105,7 @@ Do a `sudo vim /usr/share/X11/xkb/symbols/pc` and make the following changes to 
 ```
 This will make these changes permanent for any plugged in keyboard (whereas xmodmap gets reset upon keyboard plugin)
 
-9.  Run `startx` and xmonad should run
+10.  Run `startx` and xmonad should run
 
 Note:  You may need to install video drivers.  See [xorg installation on arch](https://wiki.archlinux.org/index.php/Xorg#Installation)
 
@@ -112,6 +116,8 @@ There are several packages that are not installed by default and are not managed
 In ArchLinux, some of these may be available for install via the [Arch User Repository (AUR)](https://aur.archlinux.org/). You can install the `yay` pkg manager to help manage these packages.
 
 ### Vim and Vundle
+
+UPDATE: Migrating to NeoVim
 
 I keep vim packages to a minimum.  For those I use, I manage via [Vundle](https://github.com/VundleVim/Vundle.vim).
 
@@ -195,6 +201,8 @@ infinality fonts (i.e. `ibfonts-*`) and `yaourt` can be easily installed by addi
 
 
 ## Ruby Development
+
+Update: Migrating to NeoVIM
 
 vim tags generation for Ruby is best done via `ripper-tags` (otherwise constants, attributes and other language features are missed).  Install it's gem.
 
@@ -316,4 +324,4 @@ MacOS setup is not automated as Linux setup above. Basic steps are:
 
 10. NeoVim
 
-Currently setup to use Coc as language server with vim-rails and kotlin-vim plugins managed by vim-plug per ChatGPT recs for setup. Configuration is not managed via dotfiles for now.
+Migration in progress
