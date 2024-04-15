@@ -53,7 +53,7 @@ main = do
         --    , ppTitle = xmobarColor "green" "" . shorten 50
         --    }
         , modMask = mod4Mask -- make "modMask" = mod4 key
-        , terminal = "urxvt"
+        , terminal = "kitty"
         } `additionalKeys`
         [ ((mod4Mask .|. shiftMask, xK_z), spawn "systemctl suspend") 
         , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")

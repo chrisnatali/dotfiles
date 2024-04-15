@@ -33,10 +33,10 @@ then
         pacman-key --lsign-key 962DDE58
     fi
     # install all packages
-    pacman -Sy && pacman -S --noconfirm `cat $install_type-pkgs-arch`
+    pacman -Sy && pacman -S --noconfirm `grep -v '^#' $install_type-pkgs-arch`
 elif [ $distro == "debian" ]
 then 
-    apt update && apt install -y `cat $install_type-pkgs-debian`
+    apt update && apt install -y `grep -v '^#' $install_type-pkgs-debian`
 else
     echo "Only ARCH and Debian distro's supported"
     exit 1
