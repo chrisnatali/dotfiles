@@ -1,0 +1,39 @@
+Config { overrideRedirect = False
+       , font     = "xft:iosevka-9"
+       , bgColor  = "#2f2f2f"
+       , fgColor  = "#f8f8f2"
+       , position = TopW L 90
+       , commands = [ Run Cpu
+                        [ "-L", "3"
+                        , "-H", "50"
+                        , "--high"  , "red"
+                        , "--normal", "green"
+                        ] 10
+                    , Run Memory ["--template", "Mem: <usedratio>%"] 10
+                    , Run Battery
+                        [ "--template", "Battery: <acstatus>"
+                        , "--Low"     , "15"
+                          -- battery specific options start here.
+                        , "--"
+                        , "--off"
+                        , "<left> (<timeleft>)"
+                        ] 100
+                    , Run DynNetwork
+                        [ "--template" , "   <tx>kB/s|<rx>kB/s"
+                        , "--Low"      , "1000"       -- units: B/s
+                        , "--High"     , "5000"       -- units: B/s
+                        , "--low"      , "darkgreen"
+                        , "--normal"   , "darkorange"
+                        , "--high"     , "darkred"
+                        ] 10
+                    -- network_device_status is a custom bin script
+                    , Run Com "network_device_status" [] "netstatus" 50
+                    -- Audio controlled by WirePlumber (wpctl)
+                    , Run Com "wpctl" ["get-volume", "@DEFAULT_AUDIO_SINK@"] "volume" 10
+                    , Run Date "%a %Y-%m-%d <fc=#8be9fd>%H:%M</fc>" "date" 10
+                    , Run XMonadLog
+                    ]
+       , sepChar  = "%"
+       , alignSep = "}{"
+       , template = "%XMonadLog% }{ %cpu% | %memory% | %battery% | %dynnetwork% | %netstatus% | %volume% | %date% "
+       }

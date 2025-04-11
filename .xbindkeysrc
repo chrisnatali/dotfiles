@@ -14,3 +14,13 @@
     Control+Alt + Right
 "xdotool key mousemove_relative --sync -- -20 0"
     Control+Alt + Left
+
+# Volume Controls
+"wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1"
+    Alt + equal
+
+"wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    Alt + minus
+
+"wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    Alt + 0

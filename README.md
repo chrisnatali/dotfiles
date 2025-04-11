@@ -113,19 +113,11 @@ Note:  You may need to install video drivers.  See [xorg installation on arch](h
 
 There are several packages that are not installed by default and are not managed by the most common package managers (e.g. dropbox-cli, textql). 
 
-In ArchLinux, some of these may be available for install via the [Arch User Repository (AUR)](https://aur.archlinux.org/). You can install the `yay` pkg manager to help manage these packages.
+In ArchLinux, some of these may be available for install via the [Arch User Repository (AUR)](https://aur.archlinux.org/). You can install the `paru` pkg manager to help manage these packages.
 
-### Vim and Vundle
+### NeoVim
 
-UPDATE: Migrating to NeoVim
-
-I keep vim packages to a minimum.  For those I use, I manage via [Vundle](https://github.com/VundleVim/Vundle.vim).
-
-See `.vimrc.bundles` for vim packages and install them via:
-
-```
-vim +PluginInstall +qall
-```
+Use LazyVim as Vim package manager
 
 ## Crypt key management
 

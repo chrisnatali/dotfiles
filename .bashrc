@@ -28,17 +28,17 @@ export TERM=rxvt-unicode
 
 # load alias definitions
 if [[ -f "$HOME/.bash_aliases" ]]; then
-    . "$HOME/.bash_aliases"
+  . "$HOME/.bash_aliases"
 fi
 
 # load functions
 if [[ -f "$HOME/.functions" ]]; then
-    . "$HOME/.functions"
+  . "$HOME/.functions"
 fi
 
 # add users bin to PATH if not already there
 if [[ -d "$HOME/bin" ]] && ! [[ $PATH = *$HOME/bin* ]]; then
-    PATH="$HOME/bin:$PATH"
+  PATH="$HOME/bin:$PATH"
 fi
 
 # add gem folders to path if we're using ruby/gems
@@ -50,14 +50,29 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 shopt -s checkwinsize
 
 # for go
-command -v go env > /dev/null 2>&1 && export GOPATH="$HOME/go";export PATH=$PATH:$GOPATH/bin
+command -v go env >/dev/null 2>&1 && export GOPATH="$HOME/go"
+
+[[ ":$PATH:" == *:"$GOPATH/bin":* ]] || PATH="$PATH:$GOPATH/bin"
 
 # for todo.txt
-if [[ -d "$HOME/src/todo.txt-cli" ]] && ! [[ $PATH = *$HOME/src/todo.txt-cli* ]]
-then
-    PATH="$HOME/src/todo.txt-cli:$PATH"
-    # assumes todo.cfg points to todo.txt location and is in src dir
-    TODOTXT_DEFAULT_ACTION=ls
+if [[ -d "$HOME/src/todo.txt-cli" ]] && ! [[ $PATH = *$HOME/src/todo.txt-cli* ]]; then
+  PATH="$HOME/src/todo.txt-cli:$PATH"
+  # assumes todo.cfg points to todo.txt location and is in src dir
+  TODOTXT_DEFAULT_ACTION=ls
 fi
 
+# For Goose-AI to use OpenAI API
+export OPENAI_API_KEY=$(cat /home/cjn/.openai-chatgpt4-api-key)
 
+# TODO: These PATH appendages are redundant if PATH already contains these (i.e. if they were set when loading the login shell)
+# Created by `pipx` on 2024-11-10 21:17:45
+[[ ":$PATH:" == *:"$HOME/.local/bin":* ]] || PATH="$PATH:$HOME/.local/bin"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+[[ ":$PATH:" == *:"$HOME/.rvm/bin":* ]] || PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# For miniconda
+export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh

@@ -1,0 +1,20 @@
+#!/bin/bash
+# Initialize an empty string to hold the operstate values
+net_device_info=""
+
+# Loop through all interfaces in /sys/class/net/
+for interface in /sys/class/net/*; do
+    # Get the interface name (basename of the path)
+    iface_name=$(basename "$interface")
+
+    # Exclude the loopback interface
+    if [[ "$iface_name" != "lo" ]]; then
+        # Read the operstate value
+        operstate=$(cat "$interface/operstate")
+        # Append to the operstate_values string with a space
+        net_device_info+="$iface_name: $operstate "
+    fi
+done
+
+# Echo the concatenated string, trimming any trailing space.
+echo "net devices (${net_device_info%% })"

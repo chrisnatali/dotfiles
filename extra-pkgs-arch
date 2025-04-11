@@ -1,4 +1,3 @@
-alsa-utils
 cups
 docker
 docker-compose
@@ -8,12 +7,12 @@ nodejs
 npm
 pandoc
 poppler
-python2
+python
 r
 ruby
 texlive-core
 xorg-xrandr
-wpa_supplicant 
+wpa_supplicant
 dialog
 iw
 slock
