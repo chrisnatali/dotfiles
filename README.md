@@ -109,6 +109,10 @@ This will make these changes permanent for any plugged in keyboard (whereas xmod
 
 Note:  You may need to install video drivers.  See [xorg installation on arch](https://wiki.archlinux.org/index.php/Xorg#Installation)
 
+11. Time Sync
+
+At this point, `timedatectl` should already be installed and you can set ntp based clock synchronization up via `timedatectl set-ntp true`.
+
 #### Extra Packages
 
 There are several packages that are not installed by default and are not managed by the most common package managers (e.g. dropbox-cli, textql). 
