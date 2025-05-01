@@ -113,6 +113,10 @@ Note:  You may need to install video drivers.  See [xorg installation on arch](h
 
 At this point, `timedatectl` should already be installed and you can set ntp based clock synchronization up via `timedatectl set-ntp true`.
 
+12. Setup swap space to allow using `systemctl hibernate` (which writes system state to disk and powers off, saving battery on a laptop)
+
+Search/AI for "setup swap space for systemctl hibernate after install of arch linux". Note that the above configuration uses GRUB as the bootloader, so you will need to edit the grub config file (at the time, this is `/etc/default/grub`). Also, [this section] of the archwiki on suspend/hibernate was helpful to determine that I didn't need to manually specify the swap device or resume offset for the kernel.
+
 #### Extra Packages
 
 There are several packages that are not installed by default and are not managed by the most common package managers (e.g. dropbox-cli, textql). 
