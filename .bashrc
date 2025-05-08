@@ -1,9 +1,27 @@
 #
 # ~/.bashrc
-# Things to be run on each interactive shell invocation
+# Things to be run for each new shell session aside from the login shell.
+#
+# Login shell must not source this file to avoid overriding default PATH
+# E.g. xmonad is run/compiled via system installed ghc, but I use
+# ghcup for development. So I only source ghcup and prepend path here AFTER
+# xmonad has been started.
+#
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+# function to only append string2 ($2) to string1 ($1) if string2 is not already in string1
+function append_if_missing {
+  local string="$1"
+  local value="$2"
+
+  if [[ "$string" != *"$value"* ]]; then
+    string+="$value"
+  fi
+
+  echo "$string"
+}
 
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
@@ -16,12 +34,16 @@ shopt -s histappend
 
 HISTSIZE=10000
 HISTFILESIZE=100000
-EDITOR=vim
+EDITOR=nvim
 
 shopt -s globstar
 
-# Bash eternal history
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo -e `date +%Y-%m-%d:%H:%M:%S`\\t$PWD\\t"$(history 1 | sed 's/^[^a-zA-Z]*//')" >> ~/.bash_eternal_history'
+# Customize the commands that run each time a prompt is generated to
+# 1. append the working history immediately to persistent history, clear the working history and then reload the persistent history.
+# Essentially, this is bypassing the need for working session history
+# 2. log the commands with time user pwd into .bash_eternal_history file for posterity
+prompt_extension='history -a; history -c; history -r; echo -e `date +%Y-%m-%d:%H:%M:%S`\\t$PWD\\t"$(history 1 | sed 's/^[^a-zA-Z]*//')" >> ~/.bash_eternal_history'
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }$prompt_extension"
 
 # Make TERM generic rxvt-unicode...seems more compatible with remote servers
 export TERM=rxvt-unicode
@@ -76,3 +98,6 @@ export OPENAI_API_KEY=$(cat /home/cjn/.openai-chatgpt4-api-key)
 # For miniconda
 export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
 [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
+
+# For Haskell development
+[[ -s "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"

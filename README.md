@@ -122,7 +122,6 @@ Search/AI for "setup swap space for systemctl hibernate after install of arch li
 There are several packages that are not installed by default and are not managed by the most common package managers (e.g. dropbox-cli, textql). 
 
 In ArchLinux, some of these may be available for install via the [Arch User Repository (AUR)](https://aur.archlinux.org/). You can install the `paru` pkg manager to help manage these packages.
-
 ### NeoVim
 
 Use LazyVim as Vim package manager
@@ -144,13 +143,13 @@ Import gpg keys via:
 
 These keys won't be trusted right away, so you may need to use the `--export-ownertrust` and `--import-ownertrust` options to the above OR just set them to trust via the [instructions here](http://stackoverflow.com/a/34132924)
 
-Use `gpg -k` to list gpg keys.  
+Use `gpg -k` to list gpg keys.
 
 ## Networking
 
-Wireless seems a little messy with archlinux.  On my ThinkPad x220 with the `rtl8192ce` network card driver, I was able to make connections more reliable by disabling "power saving":
+Networking hasn't been so straightforward for certain hardware (particularly wireless) on archlinux in the past. 
 
-Add `options rtl8192ce ips=0 fwlps=0` to `/etc/modprobe.d/rtl8192ce.conf` to alter the power saving settings when loading the rtl8192ce driver.  
+I have had good luck on my System76 laptop running networkd and using `nmcli` to manage connections. Ethernet just works when available. To bring wifi up and down I use `nmcli wifi radio {on,off}`
 
 ## bin directory
 
@@ -164,17 +163,30 @@ Any unit files in systemd-units can be enabled by copying them to the `/etc/syst
 
 Check these unit-files for dependencies that may not be referenced in the `pkgs` files (e.g. `slock` is reference in the lock-service unit file)
 
-### Slock
+### Suspend/Hibernate
 
-- Currently configured to lock screen via xmonad `mod+Shift+z` keypress
+Use `systemctl suspend` to persist system state to RAM and go to lower power mode. Resuming requires password (there is no prompt, just enter it once system reawakens).
 
-- To unlock, hit `ESC` and then enter password for user
+Use `systemctl hibernate` to persist system state to disk and shutdown so session can be resumed later by powering back on.
+
+### Haskell
+
+Use ghcup/cabal for managing haskell development environments and packages.
+
+See `haskell-pkgs-arch` for pre-req arch packages. Once those are installed run:
+
+```
+curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+```
+Follow prompts to configure.
+
+Note that we do not want to interfere with arch/pacman based xmonad setup, so sourcing the ghcup specifics should happen AFTER xmonad is run from the login shell.
 
 ## Bluetooth Keyboard
 
 For archlinux, see [this](https://wiki.archlinux.org/index.php/bluetooth_keyboard)
 
-## For crouton on chromebook
+## For crouton on chromebook                                                           
 
 1.  Put chromebook into developer mode and get crouton via instructions [here](https://github.com/dnschneid/crouton)
 2.  Run chronos, enter a shell and install linux with xorg targets via crouton (the following installs Debian jessie):  
