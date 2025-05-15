@@ -85,11 +85,9 @@ Once the bootstrap Arch image is loaded and running the following steps should b
     cd dotfiles 
     ```
 
-7.  Run `./setup_dotfiles.sh` and maintain as needed
+7. Run `./setup_dotfiles.sh` and maintain as needed
 
-8. Map the appropriate `.config` directories via `ln -sb ~/src/dotfiles/.config/<config_dir>` 
-
-Migrating to a top-level `.config` folder for all configuration is a WIP, so only some configurations have been moved there.
+8. Setup/link the stow packages specified in the [Stow Packages](#stow-packages) section.
 
 9. Map the Caps Lock key to the Windows/Command key
 
@@ -151,11 +149,19 @@ Networking hasn't been so straightforward for certain hardware (particularly wir
 
 I have had good luck on my System76 laptop running networkd and using `nmcli` to manage connections. Ethernet just works when available. To bring wifi up and down I use `nmcli wifi radio {on,off}`
 
-## bin directory
+## Stow Packages
 
-The `bin` directory contains display setting and other scripts.  To enable, link it to your home directory (e.g. `ln -sb ~/src/dotfiles/bin ~/bin`) and add it to your PATH on shell startup.  
+The following are packages that can be installed/managed by stow. Each package has a top-level directory named for the package. The subdirectories of the package should be linked in the users home directory. Packages can be things like user specific executables (bin) or configuration files for different applications.
 
-TODO:  Merge files into `bin` dir since group dotfiles may also go into here
+### bin
+
+From `~/src/dotfiles/`` (as the stow directory) run `stow --target=$HOME bin`. This will link all the user based executables under `bin/bin` into `~/bin` which is prepended to `$PATH` in the user specific shell startup script.
+
+### .config packages
+
+Several config packages exist at the top level of the dotfiles repo, such as `nvim` and `kitty`. These correspond to subdirectories of `~/.config` as configurations for those applications.
+
+To setup, from `~/src/dotfiles/`` (as the stow directory) run `stow --target=$HOME <config_pkg>` where `<config_pkg>` is a configurable application such as `nvim` or `kitty`. This will link all the user based config under `<config_pkg>/.config` into `~/.config`, providing the custom configuration for the application. 
 
 ## Systemd Units
 
@@ -257,7 +263,7 @@ When xmonad package is updated, you may need to recompile xmonad via `xmonad --r
 
 ## Sound
 
-For archlinux, I've only had consistent success with ALSO as the system for controlling sound (very little success with PulseAudio).  
+For archlinux, I've only had consistent success with ALSA as the system for controlling sound (very little success with PulseAudio).  
 
 If the default sound configuration wasn't working, I've had to find the correct sound card and device via:
 
