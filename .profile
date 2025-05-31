@@ -4,6 +4,12 @@
 # I.e. before starting x session and running xmonad from which
 # non-login shells will be created.
 
+# add users bin to PATH if not already there
+# The exes/scripts in $HOME/bin should not shadow any system level commands that a login shell needs
+if [[ -d "$HOME/bin" ]] && ! [[ $PATH = *$HOME/bin* ]]; then
+  PATH="$HOME/bin:$PATH"
+fi
+
 if which dropbox-cli >&/dev/null; then
   # start drobox
   dropbox-cli start

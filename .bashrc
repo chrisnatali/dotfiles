@@ -84,7 +84,7 @@ if [[ -d "$HOME/src/todo.txt-cli" ]] && ! [[ $PATH = *$HOME/src/todo.txt-cli* ]]
 fi
 
 # For Goose-AI to use OpenAI API
-export OPENAI_API_KEY=$(cat /home/cjn/.openai-chatgpt4-api-key)
+export OPENAI_API_KEY=$(cat $HOME/.openai-chatgpt4-api-key)
 
 # TODO: These PATH appendages are redundant if PATH already contains these (i.e. if they were set when loading the login shell)
 # Created by `pipx` on 2024-11-10 21:17:45
