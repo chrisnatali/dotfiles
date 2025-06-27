@@ -18,8 +18,10 @@ fi
 if which keychain >&/dev/null; then
   # startup keychain and ssh-agent with the id_rsa ssh key
   # this will export the appropriate env vars
-  # append additional ssh and gpg keys as needed
-  eval $(keychain -q --agents ssh,gpg --eval)
+  # append additional ssh keys as needed
+  # Note: If gpg keys are needed, we may need to do something special for keychain
+  # to manage gpg keys (in addition to ssh keys)
+  eval $(keychain -q --eval)
 
   # unlike gpg-agent, which appears to auto add the passphrase to its cache
   # ssh-agent seems to want it added explicitly
