@@ -1,0 +1,23 @@
+# Screen 0:.*current seems to be the fully addressable screen as exposed by xrandr
+read WIDTH HEIGHT <<< `xrandr -q --current | sed -n 's/^Screen 0:.*current \([0-9]\+\) x \([0-9]\+\).*/\1 \2/p'`
+echo "Screen 0 size ${WIDTH}x${HEIGHT}."
+xsetwacom --list devices | awk -F "\t" '{ gsub(/[[:space:]]+$/, "", $1); print $1 }' | while IFS= read -r device; do
+	xsetwacom --set "$device" ResetArea
+  read AREASX AREASY AREAX AREAY <<< `xsetwacom --get "$device" Area`
+
+  echo "tablet device '$device' size ${AREAX}x${AREAY}."
+
+	RATIOAREAY=$(( AREAX * HEIGHT / WIDTH ))
+	RATIOAREAX=$(( AREAY * WIDTH / HEIGHT ))
+	if [ "$AREAY" -gt "$RATIOAREAY" ]; then
+		NEWAREAX="$AREAX"
+		NEWAREAY="$RATIOAREAY"
+	else
+		NEWAREAX="$RATIOAREAX"
+		NEWAREAY="$AREAY"
+	fi
+
+  echo "$device Area ${AREAX}x${AREAY} ==> ${NEWAREAX}x${NEWAREAY}"
+  xsetwacom --set "$device" Area 0 0 "$NEWAREAX" "$NEWAREAY"
+done
+
