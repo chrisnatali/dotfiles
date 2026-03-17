@@ -1,0 +1,6 @@
+xsetwacom --set "Wacom One by Wacom S Pen stylus" ResetArea
+xsetwacom --set "Wacom One by Wacom S Pen eraser" ResetArea
+# 1920x1080 display ratio converted to 1920x1200 ratio 
+# determined by tablet ratio of 15200x9500
+xsetwacom --set "Wacom One by Wacom S Pen stylus" MapToOutput 1920x1200+3440+0
+xsetwacom --set "Wacom One by Wacom S Pen eraser" MapToOutput 1920x1200+3440+0

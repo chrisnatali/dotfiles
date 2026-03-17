@@ -27,23 +27,23 @@ alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
 # find and keep only unique cmd history
-HISTCONTROL=ignoredups:erasedups
+HISTCONTROL=ignoredups:ignorespace
+
+HISTSIZE=100000
+HISTFILESIZE=200000
 
 # append to the history file
 shopt -s histappend
 
-HISTSIZE=10000
-HISTFILESIZE=100000
-EDITOR=nvim
+# Customize the commands that run each time a prompt is generated to
+# 1. append the working history immediately to persistent history, and sync in-memory history with persistent history.
+# 2. log the commands with time user pwd into .bash_eternal_history file for posterity
+prompt_extension='history -a; history -n; echo -e `date +%Y-%m-%d:%H:%M:%S`\\t$PWD\\t"$(history 1 | sed 's/^[^a-zA-Z]*//')" >> ~/.bash_eternal_history'
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }$prompt_extension"
 
 shopt -s globstar
 
-# Customize the commands that run each time a prompt is generated to
-# 1. append the working history immediately to persistent history, clear the working history and then reload the persistent history.
-# Essentially, this is bypassing the need for working session history
-# 2. log the commands with time user pwd into .bash_eternal_history file for posterity
-prompt_extension='history -a; history -c; history -r; echo -e `date +%Y-%m-%d:%H:%M:%S`\\t$PWD\\t"$(history 1 | sed 's/^[^a-zA-Z]*//')" >> ~/.bash_eternal_history'
-PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }$prompt_extension"
+EDITOR=nvim
 
 # Make TERM generic rxvt-unicode...seems more compatible with remote servers
 export TERM=rxvt-unicode
@@ -76,15 +76,11 @@ command -v go env >/dev/null 2>&1 && export GOPATH="$HOME/go"
 
 [[ ":$PATH:" == *:"$GOPATH/bin":* ]] || PATH="$PATH:$GOPATH/bin"
 
-# for todo.txt
-if [[ -d "$HOME/src/todo.txt-cli" ]] && ! [[ $PATH = *$HOME/src/todo.txt-cli* ]]; then
-  PATH="$HOME/src/todo.txt-cli:$PATH"
-  # assumes todo.cfg points to todo.txt location and is in src dir
-  TODOTXT_DEFAULT_ACTION=ls
-fi
-
 # For Goose-AI to use OpenAI API
-export OPENAI_API_KEY=$(cat $HOME/.openai-chatgpt4-api-key)
+export OPENAI_API_KEY=$(cat $HOME/.openai-chatgpt5-api-key)
+
+# For Goose-AI to use Anthropic API
+export ANTHROPIC_API_KEY=$(cat $HOME/.anthropic-api-key)
 
 # TODO: These PATH appendages are redundant if PATH already contains these (i.e. if they were set when loading the login shell)
 # Created by `pipx` on 2024-11-10 21:17:45
@@ -99,5 +95,25 @@ export OPENAI_API_KEY=$(cat $HOME/.openai-chatgpt4-api-key)
 export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
 [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
 
-# For Haskell development
-[[ -s "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
+# Only run if this is NOT a login shell because xmonad depends on system level haskell managed
+# by pacman, whereas sourcing `.ghcup/env` sets up ghcup for development
+# This is needed because `.bash_profile` sources this `.bashrc` and `.bash_profile` runs
+# for login shells where xmonad is normally started from via startx
+if ! shopt -q login_shell; then
+  [[ -s "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
+fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/cjn/miniconda3/bin/conda' 'shell.bash' 'hook' 2>/dev/null)"
+if [ $? -eq 0 ]; then
+  eval "$__conda_setup"
+else
+  if [ -f "/home/cjn/miniconda3/etc/profile.d/conda.sh" ]; then
+    . "/home/cjn/miniconda3/etc/profile.d/conda.sh"
+  else
+    export PATH="/home/cjn/miniconda3/bin:$PATH"
+  fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<

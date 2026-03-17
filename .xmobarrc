@@ -11,7 +11,7 @@ Config { overrideRedirect = False
                         ] 10
                     , Run Memory ["--template", "Mem: <usedratio>%"] 10
                     , Run Battery
-                        [ "--template", "Battery: <acstatus>"
+                        [ "--template", "Battery: <acstatus> <left>%"
                         , "--Low"     , "15"
                           -- battery specific options start here.
                         , "--"

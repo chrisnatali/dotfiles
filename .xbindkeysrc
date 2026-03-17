@@ -24,3 +24,11 @@
 
 "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
     Alt + 0
+
+# Capture images of screen
+# Mouse delineated rectangle capture
+"scrot --line style=dash,color=red --select"
+    Control+Alt + 4
+
+
+

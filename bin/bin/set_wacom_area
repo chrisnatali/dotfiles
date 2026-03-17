@@ -3,6 +3,7 @@ read WIDTH HEIGHT <<< `xrandr -q --current | sed -n 's/^Screen 0:.*current \([0-
 echo "Screen 0 size ${WIDTH}x${HEIGHT}."
 xsetwacom --list devices | awk -F "\t" '{ gsub(/[[:space:]]+$/, "", $1); print $1 }' | while IFS= read -r device; do
 	xsetwacom --set "$device" ResetArea
+	xsetwacom --set "$device" MapToOutput desktop
   read AREASX AREASY AREAX AREAY <<< `xsetwacom --get "$device" Area`
 
   echo "tablet device '$device' size ${AREAX}x${AREAY}."
