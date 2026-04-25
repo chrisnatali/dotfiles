@@ -3,34 +3,33 @@
 install_type=$1
 distro=""
 
-if uname -a | grep -i arch; then
-	distro="arch"
-elif uname -a | grep -i debian; then
-	distro="debian"
+if [ -f /etc/os-release ]; then
+  . /etc/os-release
+  case "$ID" in
+  arch) distro="arch" ;;
+  debian | ubuntu) distro="debian" ;;
+  *)
+    echo "Unsupported distro: $ID"
+    exit 1
+    ;;
+  esac
 else
-	echo "Only ARCH and Debian distro's supported"
-	exit 1
+  echo "/etc/os-release not found; cannot detect distro"
+  exit 1
 fi
 
-if [ ! -f $install_type-pkgs-arch ]; then
-	echo "pkg listing file not found"
+$pkgfile="${install_type}-pkgs-${distro}"
+if [ ! -f "$pkgfile" ]; then
+  echo "pkg listing file $pkgfile not found. Aborting."
+  exit 2
 fi
 
 if [ $distro == "arch" ]; then
-	# add infinality repo for nice fonts
-	# https://wiki.archlinux.org/index.php/Infinality
-	if ! grep infinality-bundle-fonts /etc/pacman.conf; then
-		cat infinality-bundle-fonts.conf >>/etc/pacman.conf
-	fi
-	if ! pacman-key -l | grep 962DDE58; then
-		pacman-key -r 962DDE58
-		pacman-key --lsign-key 962DDE58
-	fi
-	# install all packages
-	pacman -Sy && pacman -S --noconfirm $(grep -v '^#' $install_type-pkgs-arch)
+  # install all packages
+  pacman -Sy && pacman -S --noconfirm --needed $(grep -v '^#' "$pkgfile")
 elif [ $distro == "debian" ]; then
-	apt update && apt install -y $(grep -v '^#' $install_type-pkgs-debian)
+  apt update && apt install -y $(grep -v '^#' "$pkgfile")
 else
-	echo "Only ARCH and Debian distro's supported"
-	exit 1
+  echo "Only ARCH and Debian distro's supported"
+  exit 1
 fi
