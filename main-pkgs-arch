@@ -3,23 +3,27 @@ chromium
 ctags
 curl
 dmenu
-dzen2
 firefox
 git
 go
-ibfonts-meta-base
 keychain
 kitty
+neovim
 openssh
 pass
-rxvt-unicode
+# for audio control
+pipewire
+pipewire-pulse
+wireplumber
 scrot
+stow
 thunar
 tmux
 tumbler
 vim
 xbindkeys
 xclip
+xmobar
 xmonad
 xmonad-contrib
 xorg-font-util
@@ -38,4 +42,3 @@ lazygit
 ripgrep
 ttf-nerd-fonts-symbols
 ttf-jetbrains-mono-nerd
-

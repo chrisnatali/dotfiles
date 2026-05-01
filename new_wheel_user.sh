@@ -1,8 +1,8 @@
 #!/bin/bash
 
-read -p "Enter username" username
+read -p "Enter username: " username
 echo
-read -s -p "Enter password for user $username" user_pwd
+read -s -p "Enter password for user $username: " user_pwd
 echo
 # use useradd since it works on debian and arch
 # If setting up for Debian, add user to sudo instead of wheel

@@ -40,6 +40,7 @@ else
 fi
 
 # Write the entry
+# Note: This works for EFI based booting
 cat >/boot/loader/entries/arch.conf <<EOF
 title   Arch Linux
 linux   /vmlinuz-linux
@@ -50,6 +51,3 @@ EOF
 
 echo "Generated entry:"
 cat /boot/loader/entries/arch.conf
-
-# Set root password
-passwd

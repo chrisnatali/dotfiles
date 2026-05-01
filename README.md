@@ -18,63 +18,74 @@ Once the bootstrap Arch image is loaded and running the following steps should b
     cd dotfiles-main
     ```
 
-2. Run `./partition_format_simple.sh`:  
+2. Partition the drive:  
 
     Format a single drive as boot and primary.  
-    Lookup the drive(s) via `lsblk` or if you suspect a device dir is the drive you want, you can confirm via `parted /dev/<suspected_drive> print` where suspected drive might be `sd{a,b...}`.  
+    Lookup the drive(s) via `lsblk` or if you suspect a device dir is the drive you want, you can confirm via `parted /dev/<suspected_drive> print` where suspected drive might be `sd{a,b...}`. Modern hardware will have a drive named `/dev/nvme0n1` or similar.  
 
     Define the following shell variables:
-    PRIM_DRIVE: The main drive we are installing to and formatting (e.g. `PRIM_DRIVE=/dev/sdb`)
-    PRIM_PART: The primary partition on that drive (e.g. `PRIM_PART=/dev/sdb1`)
+    PRIM_PART: The primary partition on that drive (e.g. `PRIM_PART=/dev/nvme0n1`)
 
-2. Mount the partition, install base packages, setup fstab and chroot to it (e.g.):
+    Then run `./partition_format_simple.sh $PRIM_PART`
+
+2. Mount the root partition, install base packages, setup fstab and chroot to it (e.g.):
 
     ```
-    mount $PRIM_PART /mnt
-    pacstrap /mnt base base-devel linux linux-firmware
+    mount "${PRIM_PART}p3" /mnt # Note: the `p3` suffix is the root partition setup in step 1
+    mount --mkdir "${PRIM_PART}p1" /mnt/boot       # EFI
+    swapon "${PRIM_PART}p2"                            # swap
+    pacstrap /mnt base base-devel linux linux-firmware networkmanager vim git man-db man-pages
     genfstab -U /mnt >> /mnt/etc/fstab
+    cat /mnt/etc/fstab  # verify it looks correct
     cd; cp -R dotfiles-main /mnt/root # copy dotfiles script dir to chroot
     arch-chroot /mnt /bin/bash
     ```
 
 3. cd into `root/dotfiles-main` and run `./configure_system.sh` to setup locale, fonts and bootloader
 
-4. Install linux kernel
+4. Set root password: `passwd`
+
+5. Install linux kernel and the UCODE files installed by `configure_system.sh`
   
-   This is needed in order for bootloader to find the `vmlinuz-linux` file on boot
+   This is needed in order for bootloader to find the `vmlinuz-linux` file and UCODE files on boot
    ```
    pacman -S linux
+   pacman -S amd-ucode # or possibly intel-ucode
    ```
 
-5.  Follow the rest of the arch guide from 'Configure the network' on down
+6.  Follow the rest of the arch guide from 'Configure the network' on down
 
-6.  Reboot without the usb drive and ensure that arch boots up.  
+7.  Reboot without the usb drive and ensure that arch boots up.  
 
 ### Debian (TODO:  Similar to above, but without pacman specifics)
 
 ## Configuration and Package Install
 
-1.  Install baseline archlinux or debian/ubuntu instance (see above).  You should still have `dotfiles-main` (with the install scripts) in `/root`, cd into it if it's not already your working directory.  If you skipped that part for some reason, do step 1 from above.  
+1.  Install baseline archlinux or debian/ubuntu instance (see above).  You should still have `dotfiles-main` (with the install scripts) in `/root`, cd into it if it's not already your working directory.  If you skipped that part for some reason, do step 1 from above.
 
-2.  Run `./new_user.sh` to create your user
-3. Run `./install.sh main` as root (change `main` to `bare` if installing bare pkgs on headless box)
-4.  If all went well,  `rm -rf dotfiles-main`
-5.  login as your user added via `new_user.sh`
-6.  Create your ssh key via `ssh-keygen -t rsa` and add it to github account [see this](https://help.github.com/articles/generating-an-ssh-key/)
+2.  Run `./new_wheel_user.sh` to create your user belonging to wheel with sudo privileges
+3. Enable and start NetworkManager via `systemctl enable --now NetworkManager`
+4. Run `./install.sh main` as root (change `main` to `bare` if installing bare pkgs on headless box)
+5.  If all went well,  `rm -rf dotfiles-main`
+6.  login as your user added via `new_wheel_user.sh`
+7.  [Optional] Create your ssh key via `ssh-keygen -t rsa` and add it to github account [see this](https://help.github.com/articles/generating-an-ssh-key/)
+    - You don't need this if this machine is NOT a development machine
 
-6.  make a src dir and checkout this repo into it
+8.  make a src dir and checkout this repo into it
 
     ```
     mkdir src; cd src
+    # If this machine is not going to be used for development and you don't have a local ssh key
+    # use `git clone https://github.com:chrisnatali/dotfiles.git` instead
     git clone git@github.com:chrisnatali/dotfiles.git
     cd dotfiles 
     ```
 
-7. Run `./setup_dotfiles.sh` and maintain as needed
+9. Run `./setup_dotfiles.sh` and maintain as needed
 
-8. Setup/link the stow packages specified in the [Stow Packages](#stow-packages) section.
+10. Setup/link the stow packages specified in the [Stow Packages](#stow-packages) section.
 
-9. Map the Caps Lock key to the Windows/Command key
+11. Map the Caps Lock key to the Windows/Command key
 
 Do a `sudo vim /usr/share/X11/xkb/symbols/pc` and make the following changes to the key configuration:
 
@@ -88,15 +99,15 @@ Do a `sudo vim /usr/share/X11/xkb/symbols/pc` and make the following changes to 
 ```
 This will make these changes permanent for any plugged in keyboard (whereas xmodmap gets reset upon keyboard plugin)
 
-10.  Run `startx` and xmonad should run
+12.  Run `startx` and xmonad should run
 
 Note:  You may need to install video drivers.  See [xorg installation on arch](https://wiki.archlinux.org/index.php/Xorg#Installation)
 
-11. Time Sync
+13. Time Sync
 
 At this point, `timedatectl` should already be installed and you can set ntp based clock synchronization up via `timedatectl set-ntp true`.
 
-12. Setup swap space to allow using `systemctl hibernate` (which writes system state to disk and powers off, saving battery on a laptop)
+14. Setup swap space to allow using `systemctl hibernate` (which writes system state to disk and powers off, saving battery on a laptop)
 
 Search/AI for "setup swap space for systemctl hibernate after install of arch linux". Note that the above configuration uses GRUB as the bootloader, so you will need to edit the grub config file (at the time, this is `/etc/default/grub`). Also, [this section] of the archwiki on suspend/hibernate was helpful to determine that I didn't need to manually specify the swap device or resume offset for the kernel.
 
@@ -154,6 +165,8 @@ To setup, from `~/src/dotfiles/`` (as the stow directory) run `stow --target=$HO
 Any unit files in systemd-units can be enabled by copying them to the `/etc/systemd/system` dir and enabling they via `sudo systemctl enable /etc/systemd/system/<unit-file>`
 
 Check these unit-files for dependencies that may not be referenced in the `pkgs` files (e.g. `slock` is reference in the lock-service unit file)
+
+Also, the "cjn" in `lock@cjn.service` would need to be replaced with your username.
 
 ### Suspend/Hibernate
 
