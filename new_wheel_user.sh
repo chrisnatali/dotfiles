@@ -1,4 +1,6 @@
 #!/bin/bash
+# Fail the script at point of error
+set -euo pipefail
 
 read -p "Enter username: " username
 echo

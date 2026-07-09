@@ -18,10 +18,10 @@ Once the bootstrap Arch image is loaded and running the following steps should b
     cd dotfiles-main
     ```
 
-2. Partition the drive:  
+2. Partition the drive:
 
-    Format a single drive as boot and primary.  
-    Lookup the drive(s) via `lsblk` or if you suspect a device dir is the drive you want, you can confirm via `parted /dev/<suspected_drive> print` where suspected drive might be `sd{a,b...}`. Modern hardware will have a drive named `/dev/nvme0n1` or similar.  
+    Format a single drive as boot and primary.
+    Lookup the drive(s) via `lsblk` or if you suspect a device dir is the drive you want, you can confirm via `parted /dev/<suspected_drive> print` where suspected drive might be `sd{a,b...}`. Modern hardware will have a drive named `/dev/nvme0n1` or similar.
 
     Define the following shell variables:
     PRIM_PART: The primary partition on that drive (e.g. `PRIM_PART=/dev/nvme0n1`)
@@ -46,7 +46,7 @@ Once the bootstrap Arch image is loaded and running the following steps should b
 4. Set root password: `passwd`
 
 5. Install linux kernel and the UCODE files installed by `configure_system.sh`
-  
+
    This is needed in order for bootloader to find the `vmlinuz-linux` file and UCODE files on boot
    ```
    pacman -S linux
@@ -65,7 +65,7 @@ Once the bootstrap Arch image is loaded and running the following steps should b
 
 2.  Run `./new_wheel_user.sh` to create your user belonging to wheel with sudo privileges
 3. Enable and start NetworkManager via `systemctl enable --now NetworkManager`
-4. Run `./install.sh main` as root (change `main` to `bare` if installing bare pkgs on headless box)
+4. Run `./install.sh main` as root (change `main` to `base` if installing base pkgs on headless box)
 5.  If all went well,  `rm -rf dotfiles-main`
 6.  login as your user added via `new_wheel_user.sh`
 7.  [Optional] Create your ssh key via `ssh-keygen -t rsa` and add it to github account [see this](https://help.github.com/articles/generating-an-ssh-key/)
@@ -123,7 +123,7 @@ Use LazyVim as Vim package manager
 
 ## Crypt key management
 
-Uses keychain to manage ssh/gpg keys.  
+Uses keychain to manage ssh/gpg keys.
 
 Copy the public id file to the authorized_keys file of servers via:
 ```ssh-copy-id -i <public_identity_file> user@server```
@@ -212,98 +212,9 @@ sudo sh ~/Downloads/crouton -t xorg -r jessie
 5.  Follow steps above minus running `cjn_user.sh`
 6.  For a browser that runs on armhf architecture in debian jessie, use iceweasel
 
-## Package Specific Help
-
-infinality fonts (i.e. `ibfonts-*`) and `yaourt` can be easily installed by adding custom package repositories.  See their arch install pages for more.
-
-
-## Ruby Development
-
-Update: Migrating to NeoVIM
-
-vim tags generation for Ruby is best done via `ripper-tags` (otherwise constants, attributes and other language features are missed).  Install it's gem.
-
-Update tags via:
-
-```
-ripper-tags -R
-```
-
-or for tagging all source in bundled gems:
-
-```
-ripper-tags -R . $(bundle list --paths)
-```
-
-### Using vim-rails
-
-[vim-rails](https://github.com/tpope/vim-rails) has some niceties for handling rails specific dev (more rails-aware than ripper-tags for finding things via `gf` and `:R`)
-
-For custom path specification (not needed for "standard" rails apps), create a config/projections.json explicitly specifying dirs to search:
-
-```
-{"*":
-  {"path":
-    [
-      "/home/user1/src/my-rails-app/app/admin/controllers/admin",
-      "/home/user1/src/my-rails-app/app/admin/views/admin",
-      "/home/user1/src/my-rails-app/app/admin/lib",
-      "/home/user1/src/my-rails-app/app/controllers",
-      "/home/user1/src/my-rails-app/app/models",
-      "..."
-    ]
-  }
-}
-```
-
 ## Xmonad
 
 When xmonad package is updated, you may need to recompile xmonad via `xmonad --recompile`
-
-## Sound
-
-For archlinux, I've only had consistent success with ALSA as the system for controlling sound (very little success with PulseAudio).  
-
-If the default sound configuration wasn't working, I've had to find the correct sound card and device via:
-
-```
-> aplay -l
-
-**** List of PLAYBACK Hardware Devices ****
-card 0: HDMI [HDA Intel HDMI], device 3: HDMI 0 [HDMI 0]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 0: HDMI [HDA Intel HDMI], device 7: HDMI 1 [HDMI 1]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 0: HDMI [HDA Intel HDMI], device 8: HDMI 2 [HDMI 2]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 0: HDMI [HDA Intel HDMI], device 9: HDMI 3 [HDMI 3]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 0: HDMI [HDA Intel HDMI], device 10: HDMI 4 [HDMI 4]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 1: PCH [HDA Intel PCH], device 0: ALC283 Analog [ALC283 Analog]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-```
-
-Then determining which card/device worked via testing:
-
-```
-> speaker-test -D plughw:0,7 # card 0, device 7
-```
-
-And finally, configuring the sound card via `~/.asoundrc`:
-
-```
-> cat ~/.asoundrc
-defaults.pcm.card 0
-defaults.pcm.device 7
-defaults.ctl.card 0
-```
 
 ## MacOS
 

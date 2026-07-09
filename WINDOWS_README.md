@@ -1,0 +1,21 @@
+# Windows Configuration
+
+The basic idea is to run Chrome and other Windows-centric applications in Windows. Then for development, use Linux via WSL.
+
+Interaction with Linux is done via a Windows based WezTerm terminal which acts as a sort of Windows-side text command processing node to interact with the Linux side tmux, shell and other Linux based applications (i.e. NeoVim, Linux processes, etc). I.e. the linux side sends terminal commands (i.e. formatting and text) to WezTerm to render it on the Windows side.
+
+## Installation Notes
+
+```
+# Open PowerShell as Admin
+# Setup Ubuntu instance
+wsl --set-default-version 2
+wsl --install -d Ubuntu
+# Requires restart, can wait until other windows side installs complete
+
+# install nice fonts for Windows based kitty
+winget install -e --id DEVCOM.JetBrainsMonoNerdFont
+
+# WezTerm
+winget install wez.wezterm
+```

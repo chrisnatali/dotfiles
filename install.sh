@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Fail the script at point of error
+set -euo pipefail
+
 # Run as root
 install_type=$1
 distro=""
@@ -18,7 +22,7 @@ else
   exit 1
 fi
 
-$pkgfile="${install_type}-pkgs-${distro}"
+pkgfile="${install_type}-pkgs-${distro}"
 if [ ! -f "$pkgfile" ]; then
   echo "pkg listing file $pkgfile not found. Aborting."
   exit 2

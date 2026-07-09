@@ -1,4 +1,6 @@
 #!/bin/bash
+# Fail the script at point of error
+set -euo pipefail
 
 # Create single primary partition utilizing all space
 #

@@ -11,24 +11,11 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# function to only append string2 ($2) to string1 ($1) if string2 is not already in string1
-function append_if_missing {
-  local string="$1"
-  local value="$2"
-
-  if [[ "$string" != *"$value"* ]]; then
-    string+="$value"
-  fi
-
-  echo "$string"
-}
-
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
 # find and keep only unique cmd history
 HISTCONTROL=ignoredups:ignorespace
-
 HISTSIZE=100000
 HISTFILESIZE=200000
 
@@ -44,9 +31,7 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }$prompt_extension"
 shopt -s globstar
 
 EDITOR=nvim
-
-# Make TERM generic rxvt-unicode...seems more compatible with remote servers
-export TERM=rxvt-unicode
+TERM=xterm-kitty
 
 # load alias definitions
 if [[ -f "$HOME/.bash_aliases" ]]; then
@@ -76,11 +61,9 @@ command -v go env >/dev/null 2>&1 && export GOPATH="$HOME/go"
 
 [[ ":$PATH:" == *:"$GOPATH/bin":* ]] || PATH="$PATH:$GOPATH/bin"
 
-# For Goose-AI to use OpenAI API
-export OPENAI_API_KEY=$(cat $HOME/.openai-chatgpt5-api-key)
-
-# For Goose-AI to use Anthropic API
-export ANTHROPIC_API_KEY=$(cat $HOME/.anthropic-api-key)
+# For Goose-AI to use OpenAI and/or Anthropic API
+[ -r "$HOME/.openai-chatgpt5-api-key" ] && export OPENAI_API_KEY="$(cat "$HOME/.openai-chatgpt5-api-key")"
+[ -r "$HOME/.anthropic-api-key" ] && export ANTHROPIC_API_KEY="$(cat "$HOME/.anthropic-api-key")"
 
 # TODO: These PATH appendages are redundant if PATH already contains these (i.e. if they were set when loading the login shell)
 # Created by `pipx` on 2024-11-10 21:17:45
@@ -91,10 +74,6 @@ export ANTHROPIC_API_KEY=$(cat $HOME/.anthropic-api-key)
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-# For miniconda
-export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
-[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
-
 # Only run if this is NOT a login shell because xmonad depends on system level haskell managed
 # by pacman, whereas sourcing `.ghcup/env` sets up ghcup for development
 # This is needed because `.bash_profile` sources this `.bashrc` and `.bash_profile` runs
@@ -102,6 +81,10 @@ export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
 if ! shopt -q login_shell; then
   [[ -s "$HOME/.ghcup/env" ]] && source "$HOME/.ghcup/env"
 fi
+
+# For miniconda
+export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -117,3 +100,7 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion

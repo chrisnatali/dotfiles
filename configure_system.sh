@@ -2,6 +2,9 @@
 # Basic Arch Linux configuration
 # Run inside chroot as root
 
+# Fail the script at point of error
+set -euo pipefail
+
 # Setup locale
 sed -i 's/#\(en_US.UTF-8 UTF-8\)/\1/' /etc/locale.gen
 locale-gen
