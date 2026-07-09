@@ -18,4 +18,27 @@ winget install -e --id DEVCOM.JetBrainsMonoNerdFont
 
 # WezTerm
 winget install wez.wezterm
+
+# Open WezTerm via Windows key and bring up new ubuntu instance
+# just to verify it worked
+wsl -d Ubuntu
+```
+
+## ssh bootstrap
+
+Move ssh key to linux home dir via scp OR generate new one and add it as an authorized key to github so that I can get to repos.
+
+Code for ^ omitted (look it up)
+
+
+## dotfiles
+
+From ubuntu instance
+```
+mkdir src; cd src
+git clone <dotfiles>
+cd dotfiles
+
+# Install base pkgs
+apt update && apt install -y $(grep -v '^#' main-pkgs-wsl-ubuntu)
 ```

@@ -1,9 +1,9 @@
 [user]
-	email = chris.natali@gmail.com
-	name = chrisnatali
+	email = email@gmail.com
+	name = name
 [push]
 	default = simple
 [core]
-	editor = vim
+	editor = nvim
 [init]
 	defaultBranch = main
