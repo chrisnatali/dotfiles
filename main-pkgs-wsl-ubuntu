@@ -1,16 +1,8 @@
-curl
-git
-go
 keychain
-kitty
-neovim
-openssh
 pass
 stow
 tmux
 zip
 unzip
-# For LazyVim
-fd
-lazygit
+fd-find
 ripgrep
