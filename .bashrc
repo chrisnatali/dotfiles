@@ -31,7 +31,6 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }$prompt_extension"
 shopt -s globstar
 
 EDITOR=nvim
-TERM=xterm-kitty
 
 # load alias definitions
 if [[ -f "$HOME/.bash_aliases" ]]; then

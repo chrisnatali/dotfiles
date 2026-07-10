@@ -41,4 +41,23 @@ cd dotfiles
 
 # Install base pkgs
 apt update && apt install -y $(grep -v '^#' main-pkgs-wsl-ubuntu)
+
+# link relevant dotfiles
+for dot in .profile .bash_profile .bash_aliases .bashrc .functions .tmux.conf; do
+  ln -sb ~/src/dotfiles/$dot ~
+done
+
+# copy .gitconfig to home and edit it with vim to replace email/name
+cp .gitconfig ~/
 ```
+
+# Stow
+
+```
+# Link the neovim and bin dirs from dotfiles
+stow --target=$HOME nvim
+# Note: bin has scripts that are not usable on WSL based ubuntu (TODO: differentiate these)
+stow --target=$HOME bin
+```
+
+TODO: Install neovim and test
