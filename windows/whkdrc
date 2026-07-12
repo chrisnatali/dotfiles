@@ -1,8 +1,10 @@
+.shell pwsh
+
 # Start app launcher - xmonad: Mod+d -> dmenu_run
 lwin + d : powershell -NoProfile -Command "Start-Process 'C:\Program Files\PowerToys\PowerToys.PowerLauncher.exe'"
 
 # Terminal - useful xmonad-style addition
-lwin + enter : wezterm.exe
+# lwin + enter : wezterm.exe
 
 # Screenshot region - xmonad: Mod+Ctrl+s -> scrot --select
 # Option 1: Windows Snipping Tool

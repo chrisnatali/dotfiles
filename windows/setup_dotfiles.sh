@@ -1,7 +1,7 @@
 # Fail the script at point of error
 set -euo pipefail
 
-WIN_HOME=/mnt/c/Users/cjn
+WIN_HOME=/mnt/c/Users/chris
 DOTFILES=/home/cjn/src/dotfiles
 
 mkdir -p "$WIN_HOME/.config/autohotkey"
