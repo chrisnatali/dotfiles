@@ -4,7 +4,7 @@ The basic idea is to run Chrome and other Windows-centric applications in Window
 
 Interaction with Linux is done via a Windows based WezTerm terminal which acts as a sort of Windows-side text command processing node to interact with the Linux side tmux, shell and other Linux based applications (i.e. NeoVim, Linux processes, etc). I.e. the linux side sends terminal commands (i.e. formatting and text) to WezTerm to render it on the Windows side.
 
-## Installation Notes
+## Install
 
 ```
 # Open PowerShell as Admin
@@ -22,16 +22,58 @@ winget install wez.wezterm
 # Open WezTerm via Windows key and bring up new ubuntu instance
 # just to verify it worked
 wsl -d Ubuntu
+
+# NeoVim on Windows (aside from NeoVim on WSL Ubuntu)
+# Makes it easier to edit straight from Windows relative paths
+# No special LazyVim config like I have for Linux
+winget install Neovim.Neovim
 ```
 
-## ssh bootstrap
+Komorebi: See `komorebi_setup.md`
+
+## Configure
+
+WezTerm: Configure to use PowerShell instead of cmd.exe
+
+config file: C:\Users\<user>\.wezterm.lua
+
+```
+local wezterm = require 'wezterm'
+local config = wezterm.config_builder()
+
+config.default_prog = {
+  'pwsh.exe',
+  '-NoLogo',
+}
+
+return config
+```
+
+PowerShell: Configure to use EditMode Emacs, PredictionSource History, ctrl+d for DeleteCharOrExit, ctrl+l for ClearScreen
+
+config file: $PROFILE (env var holds powershell config file path)
+
+
+```powershell
+# Enable bash-style (Emacs) key bindings
+Set-PSReadLineOption -EditMode Emacs
+
+# Show history-based suggestions as you type (like fish shell)
+Set-PSReadLineOption -PredictionSource History
+
+# Useful individual keybindings (most come free with Emacs mode)
+Set-PSReadLineKeyHandler -Chord Ctrl+d -Function DeleteCharOrExit   # Ctrl+D to exit
+Set-PSReadLineKeyHandler -Chord Ctrl+l -Function ClearScreen        # Ctrl+L to clear
+```
+
+### SSH Bootstrap
 
 Move ssh key to linux home dir via scp OR generate new one and add it as an authorized key to github so that I can get to repos.
 
 Code for ^ omitted (look it up)
 
 
-## dotfiles
+## Dotfiles
 
 From ubuntu instance
 ```
@@ -60,4 +102,10 @@ stow --target=$HOME nvim
 stow --target=$HOME bin
 ```
 
-TODO: Install neovim and test
+## NeoVim
+
+```
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo apt update
+sudo apt install neovim
+```
