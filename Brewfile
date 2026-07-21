@@ -9,9 +9,8 @@ brew 'jq'
 brew 'neovim'
 brew 'node'
 brew 'pass'
-brew 'textql'
+brew 'duckdb'
 cask 'iterm2'
-# Work
-brew 'go-jira'
-brew 'kotlin-language-server'
-cask 'snowflake-snowsql'
+# macOS tiling window manager (xmonad-like)
+# cask 'aerospace'
+

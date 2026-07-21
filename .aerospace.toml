@@ -1,0 +1,159 @@
+# AeroSpace configuration
+# ---------------------------------------------------------------------------
+# Modeled after ~/src/dotfiles/.xmonad/xmonad.hs so it feels like xmonad on
+# macOS. xmonad's mod key is Super (mod4Mask); on the Mac the equivalent role
+# is played by `alt` (Option), which is also what .skhdrc/.yabairc already use.
+#
+# Headline feature you asked for: move ALL windows in a space from one monitor
+# to another. That's `move-workspace-to-monitor` (see alt-shift-o below).
+# AeroSpace's "named workspaces" carry all their windows with them, so moving a
+# workspace to another monitor moves the whole space at once -- the closest
+# analog to xmonad's greedy-view screen model.
+#
+# Reload after editing:  alt-shift-r  (or `aerospace reload-config`)
+# ---------------------------------------------------------------------------
+
+# Start AeroSpace at login (replaces xmonad being launched from .xinitrc).
+start-at-login = true
+
+# Normalizations keep the tiling tree tidy, similar to how xmonad's Tall/
+# ThreeCol layouts always produce a clean arrangement.
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# 'tiles' with 'auto' orientation ~ xmonad's Tall (splits the long screen edge).
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+accordion-padding = 30
+
+# Follow the mouse to the newly focused monitor (nice with multi-monitor moves).
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# xmonad had no gaps; keep it tight. Bump these if you want breathing room.
+[gaps]
+inner.horizontal = 0
+inner.vertical = 0
+outer.left = 0
+outer.bottom = 0
+outer.top = 0
+outer.right = 0
+
+[key-mapping]
+preset = 'qwerty'
+
+# ===========================================================================
+# Main mode -- the default bindings
+# ===========================================================================
+[mode.main.binding]
+
+# --- Layouts (xmonad: mod-space cycles Tall / Mirror Tall / Full / ThreeCol) -
+alt-slash = 'layout tiles horizontal vertical'      # toggle H/V tiling (Tall <-> Mirror Tall)
+alt-comma = 'layout accordion horizontal vertical'  # accordion (stacked) layout
+# Below conflicts with alt-f for forward word in terminal
+# alt-f = 'fullscreen'                                 # ~ xmonad Full layout (mod-space -> Full)
+alt-t = 'layout floating tiling'                     # ~ xmonad mod-t: toggle float/tile for window
+
+# --- Focus windows (xmonad: mod-j/mod-k; using vim hjkl as in your .skhdrc) --
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# --- Move windows within a space (xmonad: mod-shift-j/mod-shift-k) -----------
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# --- Resize (xmonad: mod-h/mod-l shrink/grow master) ------------------------
+alt-minus = 'resize smart -50'
+alt-equal = 'resize smart +50'
+
+# --- Workspaces 1-9 (xmonad: mod-[1..9] view workspace N) -------------------
+# `summon-workspace` reproduces xmonad's default mod-[N] greedyView exactly:
+# it pulls workspace N onto the monitor you're focused on (swapping out what
+# was there) and focuses it. AeroSpace's own docs say its behavior "is
+# identical to Xmonad". If you'd instead rather jump focus to N's existing
+# monitor without moving it, swap these for e.g. `alt-1 = 'workspace 1'`.
+alt-1 = 'summon-workspace 1'
+alt-2 = 'summon-workspace 2'
+alt-3 = 'summon-workspace 3'
+alt-4 = 'summon-workspace 4'
+alt-5 = 'summon-workspace 5'
+alt-6 = 'summon-workspace 6'
+alt-7 = 'summon-workspace 7'
+alt-8 = 'summon-workspace 8'
+alt-9 = 'summon-workspace 9'
+alt-tab = 'workspace-back-and-forth'                 # jump to previous workspace
+
+# --- Move focused window to a workspace (xmonad: mod-shift-[1..9]) ----------
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
+alt-shift-8 = 'move-node-to-workspace 8'
+alt-shift-9 = 'move-node-to-workspace 9'
+
+# --- Monitors (xmonad: mod-w/e focus screens; mod-shift-w/e move window) ----
+# --wrap-around makes these toggle back and forth on a 2-monitor setup.
+alt-w = 'focus-monitor --wrap-around prev'
+alt-e = 'focus-monitor --wrap-around next'
+alt-shift-w = 'move-node-to-monitor --wrap-around --focus-follows-window prev'  # send window to prev monitor
+alt-shift-e = 'move-node-to-monitor --wrap-around --focus-follows-window next'  # send window to next monitor
+
+# --- *** Move the ENTIRE space (all its windows) to another monitor *** -----
+# This is the behavior you specifically wanted. On a 2-monitor setup, either
+# binding just flips the current workspace (and every window in it) to the
+# other display.
+alt-shift-o = 'move-workspace-to-monitor --wrap-around next'
+alt-o       = 'move-workspace-to-monitor --wrap-around prev'
+
+# --- Window / session management -------------------------------------------
+alt-shift-c = 'close'                                          # xmonad mod-shift-c: close window
+alt-shift-enter = 'exec-and-forget open -na iTerm'             # xmonad mod-shift-return: terminal
+alt-shift-r = 'reload-config'                                  # xmonad mod-q: recompile/restart
+alt-shift-s = 'exec-and-forget screencapture -i -c'           # xmonad mod-C-s: interactive screenshot -> clipboard
+
+# Enter "service" mode for less-common actions (see below).
+alt-shift-semicolon = 'mode service'
+
+# --- macOS equivalents of your xmonad spawns (opt in by uncommenting) -------
+# App launcher (xmonad mod-d = dmenu). macOS has Spotlight on cmd-space; or use
+# Raycast/Alfred. Uncomment to bind Raycast to alt-d:
+# alt-d = 'exec-and-forget open -a Raycast'
+#
+# Sleep (xmonad mod-z = systemctl suspend):
+# alt-shift-z = 'exec-and-forget pmset sleepnow'
+#
+# PostureCam (xmonad mod-p = mpv webcam). Device-specific; adapt to a Mac
+# camera source before enabling, e.g. via ffmpeg/QuickTime:
+# alt-p = 'exec-and-forget open -a "Photo Booth"'
+
+# ===========================================================================
+# Service mode -- press alt-shift-semicolon to enter, esc to leave
+# ===========================================================================
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']   # reset the layout tree (~ xmonad mod-shift-space)
+f = ['layout floating tiling', 'mode main']   # toggle floating
+backspace = ['close-all-windows-but-current', 'mode main']
+
+# Re-join a window into a container in a given direction, then return to main.
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
+
+# ===========================================================================
+# Optional: pin certain workspaces to a preferred monitor on connect.
+# You wanted spaces to be movable, so this is left commented. Monitor keys can
+# be a name regex or 'main'/'secondary'. Example:
+# ===========================================================================
+# [workspace-to-monitor-force-assignment]
+# 1 = 'main'
+# 2 = 'main'
+# 9 = 'secondary'

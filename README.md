@@ -218,6 +218,8 @@ When xmonad package is updated, you may need to recompile xmonad via `xmonad --r
 
 ## MacOS
 
+TODO: Revise this based on latest Mac setup
+
 MacOS setup is not automated as Linux setup above. Basic steps are:
 
 1. `brew bundle --file Brewfile` to install packages/casks listed in Brewfile
@@ -232,24 +234,23 @@ MacOS setup is not automated as Linux setup above. Basic steps are:
   - Adding any local configuration to that `.<config_file_name>.local` (these may not be under version control, so copy from existing setup)
 
 5. Configure installed applications by linking their respective dot files or directories to `~`
-  - For snowsql (and possibly other apps), `ln -s /Applications/SnowSQL.app/Contents/MacOS/snowsql /Users/cnatali/bin/snowsql` to put it in view of `PATH`
+  - e.g. `ln -s ~/src/dotfiles/.aerospace.toml ~/.aerospace.toml`
 
-6. Clone [maximum-awesome fork](https://github.com/chrisnatali/maximum-awesome) to src and run rake on it to setup vim and tmux plus their config
+6. Set iTerm config to allow alt-b, alt-f... to work as expected (see [this](https://stackoverflow.com/questions/18923765/bash-keyboard-shortcuts-in-iterm-like-altd-and-altf))
 
-7. Set iTerm config to allow alt-b, alt-f... to work as expected (see [this](https://stackoverflow.com/questions/18923765/bash-keyboard-shortcuts-in-iterm-like-altd-and-altf))
-
-8. Add 9 Desktops
+7. Add 9 Desktops
   - Hit `Ctrl + Up` and click the "+" icon at the right of screen to add Desktops (aka spaces)
-  - In "System Preferences > Keyboard > Mission Control > Shortcuts", click the checkbox next to each "Switch to Desktop <n>" line under "Mission Control"
+  - In "System Settings > Keyboard > Keyboard Shortcuts > Mission Control > Mission Control", click the checkbox next to each "Switch to Desktop <n>" line
   - For each of those "Switch to Desktop <n>" lines, change the key combination to be "Alt + <n>" (Alt is also the Option key on Mac)
 
-9. Setup yabai tiling window manager
-  - See [instructions here](https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)))
-  - Configure via `.yabairc` in this repo, then link to home dir via `ln -s ~/src/dotfiles/.yabairc .yabairc`
-  - Use [skhd](https://github.com/koekeishiya/skhd) to map modifiers to yabai actions
-  - Configure via `.skhdrc` in this repo, then link to home dir via `ln -s ~/src/dotfiles/.skhdrc .skhdrc`
-  - Use karabiner to map caps-lock to alt key so that caps-lock is effectively the main mod key for Yabai and switching desktop/spaces, making it similar to xmonad
+8. Setup [AeroSpace](https://github.com/nikitabobko/AeroSpace) tiling window manager (xmonad-like; replaces the old yabai + skhd setup)
+  - Installed via `Brewfile` (`cask 'aerospace'`), or directly with `brew install --cask nikitabobko/tap/aerospace`
+  - Link config to home dir via `ln -s ~/src/dotfiles/.aerospace.toml ~/.aerospace.toml`
+  - Launch with `open -a AeroSpace`, then grant Accessibility permission under "System Settings > Privacy & Security > Accessibility"
+  - `start-at-login = true` in the config makes AeroSpace register itself as a Login Item, so it runs automatically on login
+  - Reload after editing the config with `aerospace reload-config` (or the `alt-shift-r` binding)
+  - Map Caps-Lock to Alt in System Settings > Keyboard > Keyboard Shortcuts > Modifier Keys
 
-10. NeoVim
+9. NeoVim
 
 Migration in progress
