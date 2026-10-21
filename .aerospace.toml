@@ -52,7 +52,7 @@ alt-slash = 'layout tiles horizontal vertical'      # toggle H/V tiling (Tall <-
 alt-comma = 'layout accordion horizontal vertical'  # accordion (stacked) layout
 # Below conflicts with alt-f for forward word in terminal
 # alt-f = 'fullscreen'                                 # ~ xmonad Full layout (mod-space -> Full)
-alt-t = 'layout floating tiling'                     # ~ xmonad mod-t: toggle float/tile for window
+alt-t = 'layout floating tiling accordion'                     # ~ xmonad mod-t: toggle float/tile for window
 
 # --- Focus windows (xmonad: mod-j/mod-k; using vim hjkl as in your .skhdrc) --
 alt-h = 'focus left'
@@ -85,7 +85,7 @@ alt-6 = 'summon-workspace 6'
 alt-7 = 'summon-workspace 7'
 alt-8 = 'summon-workspace 8'
 alt-9 = 'summon-workspace 9'
-alt-tab = 'workspace-back-and-forth'                 # jump to previous workspace
+alt-backtick = 'workspace-back-and-forth'               # jump to previous workspace (moved off alt-tab, which bb terminal uses)
 
 # --- Move focused window to a workspace (xmonad: mod-shift-[1..9]) ----------
 alt-shift-1 = 'move-node-to-workspace 1'
@@ -105,33 +105,20 @@ alt-e = 'focus-monitor --wrap-around next'
 alt-shift-w = 'move-node-to-monitor --wrap-around --focus-follows-window prev'  # send window to prev monitor
 alt-shift-e = 'move-node-to-monitor --wrap-around --focus-follows-window next'  # send window to next monitor
 
-# --- *** Move the ENTIRE space (all its windows) to another monitor *** -----
-# This is the behavior you specifically wanted. On a 2-monitor setup, either
-# binding just flips the current workspace (and every window in it) to the
-# other display.
-alt-shift-o = 'move-workspace-to-monitor --wrap-around next'
-alt-o       = 'move-workspace-to-monitor --wrap-around prev'
-
 # --- Window / session management -------------------------------------------
 alt-shift-c = 'close'                                          # xmonad mod-shift-c: close window
-alt-shift-enter = 'exec-and-forget open -na iTerm'             # xmonad mod-shift-return: terminal
 alt-shift-r = 'reload-config'                                  # xmonad mod-q: recompile/restart
-alt-shift-s = 'exec-and-forget screencapture -i -c'           # xmonad mod-C-s: interactive screenshot -> clipboard
+
+# -- iTerm and Chrome quick launch new windows
+alt-shift-enter = "exec-and-forget osascript -e 'tell application \"iTerm\" to create window with default profile'"
+alt-g = "exec-and-forget osascript -e 'tell application \"Google Chrome\" to make new window'"
+
+
+# Move Bloomberg Citrix windows to space 1 and float them
+alt-ctrl-c = '''exec-and-forget aerospace list-windows --monitor all --app-bundle-id com.citrix.receiver.icaviewer.mac --format '%{window-id}' | while read -r id; do aerospace layout --window-id "$id" floating; aerospace move-node-to-workspace --window-id "$id" 1; done'''
 
 # Enter "service" mode for less-common actions (see below).
 alt-shift-semicolon = 'mode service'
-
-# --- macOS equivalents of your xmonad spawns (opt in by uncommenting) -------
-# App launcher (xmonad mod-d = dmenu). macOS has Spotlight on cmd-space; or use
-# Raycast/Alfred. Uncomment to bind Raycast to alt-d:
-# alt-d = 'exec-and-forget open -a Raycast'
-#
-# Sleep (xmonad mod-z = systemctl suspend):
-# alt-shift-z = 'exec-and-forget pmset sleepnow'
-#
-# PostureCam (xmonad mod-p = mpv webcam). Device-specific; adapt to a Mac
-# camera source before enabling, e.g. via ffmpeg/QuickTime:
-# alt-p = 'exec-and-forget open -a "Photo Booth"'
 
 # ===========================================================================
 # Service mode -- press alt-shift-semicolon to enter, esc to leave
@@ -140,6 +127,17 @@ alt-shift-semicolon = 'mode service'
 esc = ['reload-config', 'mode main']
 r = ['flatten-workspace-tree', 'mode main']   # reset the layout tree (~ xmonad mod-shift-space)
 f = ['layout floating tiling', 'mode main']   # toggle floating
+# Balance window sizes
+b = ['balance-sizes', 'mode main']
+
+# Tile all windows in current workspace
+t = [
+    '''exec-and-forget aerospace list-windows --workspace focused --format '%{window-id}' | xargs -I {} aerospace layout --window-id {} tiling''',
+    'layout --root tiles horizontal',
+    'balance-sizes',
+    'mode main',
+]
+
 backspace = ['close-all-windows-but-current', 'mode main']
 
 # Re-join a window into a container in a given direction, then return to main.
@@ -147,6 +145,38 @@ alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
+
+
+# TILING: AeroSpace auto-floats any window that lacks a native macOS fullscreen
+# (green zoom) button -- its "dialog heuristic". Citrix's BBA session windows
+# are Windows windows wrapped by Citrix, so they have no such button and get
+# floated by default.
+#
+# GLITCHY DROPDOWNS FIX: Citrix/BBA spawns transient popups (Bloomberg
+# autocomplete dropdowns, tooltips, etc.) as SEPARATE macOS windows titled
+# 'wdmm-Win32Window'. If the rule moves those popups too, AeroSpace drags them
+# into the tiling tree and forces a resize; Bloomberg then redraws the dropdown,
+# AeroSpace re-detects and re-grabs it, and you get the "disappears and
+# reappears" flicker.
+#
+# The window-title regex excludes those popups from the move. It's an inverted
+# match: '^(?!.*wdmm-Win32Window).*' matches any title that does NOT contain
+# 'wdmm-Win32Window'. The '^' anchor pins the match to the start of the string
+# (ICU regex, non-multiline), turning AeroSpace's substring search into a
+# whole-title test, and the negative lookahead does the exclusion. Excluded
+# popups fall through to AeroSpace's default heuristic, which floats windows
+# lacking a native fullscreen button (Citrix's wrapped popups qualify).
+#
+# If dropdowns still flicker, confirm the popup title while one is open:
+#   aerospace list-windows --all | grep -i citrix
+# and, if needed, add a separate block ABOVE this one that matches the popup
+# title and runs 'layout floating' explicitly.
+# ===========================================================================
+[[on-window-detected]]
+if.app-id = 'com.citrix.receiver.icaviewer.mac'
+if.window-title-regex-substring = '^(?!.*wdmm-Win32Window).*'
+run = ['layout floating']
+
 
 # ===========================================================================
 # Optional: pin certain workspaces to a preferred monitor on connect.
