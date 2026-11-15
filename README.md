@@ -218,39 +218,17 @@ When xmonad package is updated, you may need to recompile xmonad via `xmonad --r
 
 ## MacOS
 
-TODO: Revise this based on latest Mac setup
+Full step-by-step instructions are in [MACOS_SETUP.md](MACOS_SETUP.md). The approach is to keep
+the Mac close to stock and configure as little as possible:
 
-MacOS setup is not automated as Linux setup above. Basic steps are:
-
-1. `brew bundle --file Brewfile` to install packages/casks listed in Brewfile
-  - There may be failures due to pinned dependencies or other baseline configuration oddities. YMMV.
-
-2. `chsh -s /bin/bash` to change the default shell to bash
-
-3. Migrate any gpg keys (for pass) and ssh keys (see  [Crypt key management](Crypt key management) section above)
-
-4. Configure bash with custom PATH, functions, aliases etc by:
-  - Adding `source .<config_file_name>.local` to the existing `.<config_file_name>` (e.g. `source .bashrc.local` for bashrc)
-  - Adding any local configuration to that `.<config_file_name>.local` (these may not be under version control, so copy from existing setup)
-
-5. Configure installed applications by linking their respective dot files or directories to `~`
-  - e.g. `ln -s ~/src/dotfiles/.aerospace.toml ~/.aerospace.toml`
-
-6. Set iTerm config to allow alt-b, alt-f... to work as expected (see [this](https://stackoverflow.com/questions/18923765/bash-keyboard-shortcuts-in-iterm-like-altd-and-altf))
-
-7. Add 9 Desktops
-  - Hit `Ctrl + Up` and click the "+" icon at the right of screen to add Desktops (aka spaces)
-  - In "System Settings > Keyboard > Keyboard Shortcuts > Mission Control > Mission Control", click the checkbox next to each "Switch to Desktop <n>" line
-  - For each of those "Switch to Desktop <n>" lines, change the key combination to be "Alt + <n>" (Alt is also the Option key on Mac)
-
-8. Setup [AeroSpace](https://github.com/nikitabobko/AeroSpace) tiling window manager (xmonad-like; replaces the old yabai + skhd setup)
-  - Installed via `Brewfile` (`cask 'aerospace'`), or directly with `brew install --cask nikitabobko/tap/aerospace`
-  - Link config to home dir via `ln -s ~/src/dotfiles/.aerospace.toml ~/.aerospace.toml`
-  - Launch with `open -a AeroSpace`, then grant Accessibility permission under "System Settings > Privacy & Security > Accessibility"
-  - `start-at-login = true` in the config makes AeroSpace register itself as a Login Item, so it runs automatically on login
-  - Reload after editing the config with `aerospace reload-config` (or the `alt-shift-r` binding)
-  - Map Caps-Lock to Alt in System Settings > Keyboard > Keyboard Shortcuts > Modifier Keys
-
-9. NeoVim
-
-Migration in progress
+- **Shell:** default zsh with emacs keybindings (`bindkey -e`), not bash. The Linux bash dotfiles
+  (`.bashrc`, `.profile`, `.bash_aliases`) and `bin` are not linked on macOS.
+- **Terminal:** Terminal.app with "Use Option as Meta key" so Alt-b/Alt-f work (iTerm2 optional).
+- **Packages:** installed individually with `brew install` (see step 1 of the setup doc), not via
+  `brew bundle`.
+- **Keys:** the SSH key (`~/.ssh/id_rsa`) and GPG key for `pass` are copied over from the Linux
+  laptop (see [Crypt key management](#crypt-key-management)). macOS Keychain replaces `keychain`
+  for ssh-agent, and `pinentry-mac` handles GPG passphrase prompts.
+- **Linked from this repo:** `.gitconfig`, `nvim` (via stow), `.tmux.conf` + `.tmux-osx.conf`.
+- **No tiling window manager for now.** `.aerospace.toml` (and the older `.yabairc`/`.skhdrc`)
+  remain in the repo but are not installed.
