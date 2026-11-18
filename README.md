@@ -81,7 +81,7 @@ Once the bootstrap Arch image is loaded and running the following steps should b
     cd dotfiles 
     ```
 
-9. Run `./setup_dotfiles.sh` and maintain as needed
+9. Run `./setup_dotfiles.sh` and maintain as needed.
 
 10. Setup/link the stow packages specified in the [Stow Packages](#stow-packages) section.
 
